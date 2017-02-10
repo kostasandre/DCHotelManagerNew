@@ -15,16 +15,16 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         where T: IEntity
     {
         #region Implementation of IEntityController<T>
-
+        [Route("createOrUpdate")]
         [HttpPost]
         public virtual T CreateOrUpdateEntity(T entity)
         {
             throw new NotImplementedException();
         }
 
+        [Route("delete/{id}")]
         [HttpDelete]
-        [Route("delete")]
-        public virtual void Delete(T entity)
+        public virtual void Delete(int id)
         {
             throw new NotImplementedException();
         }

@@ -39,9 +39,10 @@ namespace DCHotelManagerCore.Web.Api.Controllers.Interfaces
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="entity">
+        /// <param name="id">
+        /// The id.
         /// </param>
-        void Delete(T entity);
+        void Delete(int id);
 
         /// <summary>
         /// The get.
