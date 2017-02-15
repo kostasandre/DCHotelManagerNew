@@ -12,8 +12,12 @@ namespace DCHotelManagerCore.Web.Api.Controllers.Interfaces
     #region
 
     using System.Collections.Generic;
+    using System.Net.Http;
 
+    using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
+
+    using Microsoft.AspNetCore.Mvc;
 
     #endregion
 
@@ -34,7 +38,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers.Interfaces
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        T CreateOrUpdateEntity(T entity);
+        JsonResult CreateOrUpdateEntity(T entity);
 
         /// <summary>
         /// The delete.

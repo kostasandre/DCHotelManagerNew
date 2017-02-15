@@ -1,27 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BaseController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The base controller.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace DCHotelManagerCore.Web.Api.Controllers
 {
-    using DCHotelManagerCore.Lib.Models.Persistent;
+    #region
+
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
     using DCHotelManagerCore.Web.Api.Controllers.Interfaces;
 
     using Microsoft.AspNetCore.Mvc;
 
-    public class BaseController<T>: IEntityController<T>
-        where T: IEntity
+    #endregion
+
+    /// <summary>
+    /// The base controller.
+    /// </summary>
+    /// <typeparam name="T">
+    /// </typeparam>
+    public class BaseController<T> : IEntityController<T>
+        where T : IEntity
     {
-        #region Implementation of IEntityController<T>
+        /// <summary>
+        /// The create or update entity.
+        /// </summary>
+        /// <param name="entity">
+        /// The entity.
+        /// </param>
+        /// <returns>
+        /// The <see cref="T"/>.
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         [Route("createOrUpdate")]
         [HttpPost]
-        public virtual T CreateOrUpdateEntity(T entity)
+        public virtual JsonResult CreateOrUpdateEntity(T entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// The delete.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         [Route("delete/{id}")]
         [HttpDelete]
         public virtual void Delete(int id)
@@ -29,6 +63,14 @@ namespace DCHotelManagerCore.Web.Api.Controllers
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// The get all.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         [HttpGet]
         [Route("getall")]
         public virtual IEnumerable<T> GetAll()
@@ -36,12 +78,21 @@ namespace DCHotelManagerCore.Web.Api.Controllers
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// The get entity.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="T"/>.
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         [HttpGet]
         public T GetEntity(int id)
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }

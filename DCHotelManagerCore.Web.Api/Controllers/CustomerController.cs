@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HotelController.cs" company="">
+// <copyright file="CustomerController.cs" company="">
 //   
 // </copyright>
 // <summary>
-//   The hotel controller.
+//   The customer controller.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,6 @@ namespace DCHotelManagerCore.Web.Api.Controllers
     #region
 
     using System.Collections.Generic;
-    using System.Net.Http;
 
     using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Repositories.Interfaces;
@@ -22,25 +21,26 @@ namespace DCHotelManagerCore.Web.Api.Controllers
     #endregion
 
     /// <summary>
-    /// The hotel controller.
+    /// The customer controller.
     /// </summary>
     [Route("api/[controller]")]
-    public class HotelController : BaseController<Hotel>
+    public class CustomerController : BaseController<Customer>
     {
         /// <summary>
         /// The hotel repository.
         /// </summary>
-        private readonly IEntityRepository<Hotel> hotelRepository;
+        private readonly IEntityRepository<Customer> customerRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HotelController"/> class.
+        /// Initializes a new instance of the <see cref="CustomerController"/> class. 
+        /// Initializes a new instance of the <see cref="RoomController"/> class.
         /// </summary>
-        /// <param name="hotelRepository">
-        /// The hotel repository.
+        /// <param name="customerRepository">
+        /// The customer Repository.
         /// </param>
-        public HotelController(IEntityRepository<Hotel> hotelRepository)
+        public CustomerController(IEntityRepository<Customer> customerRepository)
         {
-            this.hotelRepository = hotelRepository;
+            this.customerRepository = customerRepository;
         }
 
         /// <summary>
@@ -52,16 +52,15 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <returns>
         /// The <see cref="Hotel"/>.
         /// </returns>
-        public override JsonResult CreateOrUpdateEntity([FromBody] Hotel entity)
+        public override JsonResult CreateOrUpdateEntity([FromBody] Customer entity)
         {
-
             if (entity.Id == 0)
             {
-                entity = this.hotelRepository.Create(entity);
+                entity = this.customerRepository.Create(entity);
             }
             else
             {
-                this.hotelRepository.Update(entity);
+                this.customerRepository.Update(entity);
             }
 
             return new JsonResult(entity);
@@ -75,7 +74,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// </param>
         public override void Delete(int id)
         {
-            this.hotelRepository.Delete(id);
+            this.customerRepository.Delete(id);
         }
 
         /// <summary>
@@ -84,10 +83,9 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        public override IEnumerable<Hotel> GetAll()
+        public override IEnumerable<Customer> GetAll()
         {
-
-            var list = this.hotelRepository.ReadAllList();
+            var list = this.customerRepository.ReadAllList();
             return list;
         }
     }
