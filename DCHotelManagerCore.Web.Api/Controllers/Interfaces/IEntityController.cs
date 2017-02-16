@@ -26,7 +26,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers.Interfaces
     /// </summary>
     /// <typeparam name="T">
     /// </typeparam>
-    interface IEntityController<T>
+    public interface IEntityController<T>
         where T : IEntity
     {
         /// <summary>

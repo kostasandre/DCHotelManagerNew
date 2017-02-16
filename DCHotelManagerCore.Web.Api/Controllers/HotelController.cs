@@ -12,7 +12,6 @@ namespace DCHotelManagerCore.Web.Api.Controllers
     #region
 
     using System.Collections.Generic;
-    using System.Net.Http;
 
     using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Repositories.Interfaces;
@@ -54,7 +53,6 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// </returns>
         public override JsonResult CreateOrUpdateEntity([FromBody] Hotel entity)
         {
-
             if (entity.Id == 0)
             {
                 entity = this.hotelRepository.Create(entity);
@@ -86,9 +84,23 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// </returns>
         public override IEnumerable<Hotel> GetAll()
         {
-
             var list = this.hotelRepository.ReadAllList();
             return list;
+        }
+
+        /// <summary>
+        /// The get entity.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Hotel"/>.
+        /// </returns>
+        public override Hotel GetEntity(int id)
+        {
+            var hotel = this.hotelRepository.ReadOne(id);
+            return hotel;
         }
     }
 }

@@ -13,7 +13,6 @@ namespace DCHotelManagerCore.Web.Api.Controllers
 
     using System;
     using System.Collections.Generic;
-    using System.Net.Http;
 
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
     using DCHotelManagerCore.Web.Api.Controllers.Interfaces;
@@ -90,7 +89,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <exception cref="NotImplementedException">
         /// </exception>
         [HttpGet]
-        public T GetEntity(int id)
+        public virtual T GetEntity(int id)
         {
             throw new NotImplementedException();
         }
