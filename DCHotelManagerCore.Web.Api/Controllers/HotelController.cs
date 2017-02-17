@@ -80,7 +80,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// The get all.
         /// </summary>
         /// <returns>
-        /// The <see cref="IEnumerable"/>.
+        /// The <see cref="IEnumerable{T}"/>.
         /// </returns>
         public override IEnumerable<Hotel> GetAll()
         {
