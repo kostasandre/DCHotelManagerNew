@@ -50,6 +50,7 @@ namespace DCHotelManagerCore.UINew
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         /// <summary>
         /// The configure.
         /// </summary>
@@ -84,6 +85,7 @@ namespace DCHotelManagerCore.UINew
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+
         /// <summary>
         /// The configure services.
         /// </summary>

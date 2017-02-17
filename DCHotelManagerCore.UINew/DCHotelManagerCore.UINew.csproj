@@ -22,8 +22,5 @@
     <ProjectReference Include="..\DCHotelManagerCore.Lib\DCHotelManagerCore.Lib.csproj" />
     <ProjectReference Include="..\DCHotelManagerCore.Web.Api\DCHotelManagerCore.Web.Api.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\Models\Hotel\" />
-  </ItemGroup>
 
 </Project>
