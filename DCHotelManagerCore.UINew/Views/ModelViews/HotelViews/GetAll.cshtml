@@ -1,0 +1,22 @@
+﻿@using DCHotelManagerCore.Lib.Models.Persistent
+@model  List<Hotel>
+<h1>@Model</h1>
+@foreach (var hotel in Model)
+{
+    <div class="col-sm-4 col-md-4 col-lg-4">
+            <div class="thumbnail">
+                @*<img src="@hotel.ImageThumbnailUrl" alt="" />*@
+                <div class="caption">
+
+                    <h3 class="pull-right">@hotel.Email</h3>
+                    <h3>
+                        <a>@hotel.Name</a>
+                    </h3>
+                    <p>@hotel.Address</p>
+                </div>
+            </div>
+        </div>
+
+    @*@Html.Partial("PieOverviewSummary", pie)*@
+}
+
