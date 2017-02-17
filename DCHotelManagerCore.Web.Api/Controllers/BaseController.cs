@@ -89,6 +89,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <exception cref="NotImplementedException">
         /// </exception>
         [HttpGet]
+        [Route("getone/{id}")]
         public virtual T GetEntity(int id)
         {
             throw new NotImplementedException();
