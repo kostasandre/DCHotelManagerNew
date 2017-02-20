@@ -12,6 +12,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
     #region
 
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -29,6 +30,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// </summary>
         public Room()
         {
+            this.Pictures = new List<Picture>();
             this.Created = DateTime.Now;
             this.CreatedBy = Environment.MachineName;
         }
@@ -78,6 +80,8 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets the id.
         /// </summary>
         public int Id { get; set; }
+
+        public List<Picture> Pictures { get; set; }
 
         /// <summary>
         /// Gets or sets the room type.

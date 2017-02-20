@@ -12,6 +12,8 @@ namespace DCHotelManagerCore.UINew
     #region
 
     using DCHotelManagerCore.Lib.Models.Persistent;
+    using DCHotelManagerCore.UINew.Controllers.Interfaces;
+    using DCHotelManagerCore.UINew.Controllers.Models.Hotel;
     using DCHotelManagerCore.Web.Api.Controllers;
     using DCHotelManagerCore.Web.Api.Controllers.Interfaces;
 
@@ -95,10 +97,10 @@ namespace DCHotelManagerCore.UINew
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationInsightsTelemetry(this.Configuration);
-            services.AddTransient<IEntityController<Hotel>, HotelController>();
-            services.AddTransient<IEntityController<Room>, RoomController>();
-            services.AddTransient<IEntityController<RoomType>, RoomTypeController>();
-            services.AddTransient<IEntityController<Customer>, CustomerController>();
+            //services.AddTransient<IEntityUiController<Hotel>, MvcHotelController>();
+            //services.AddTransient<IEntityController<Room>, RoomController>();
+            //services.AddTransient<IEntityController<RoomType>, RoomTypeController>();
+            //services.AddTransient<IEntityController<Customer>, CustomerController>();
 
             // Add framework services.
             services.AddMvc();

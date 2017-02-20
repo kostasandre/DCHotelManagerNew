@@ -9,9 +9,10 @@ using DCHotelManagerCore.Lib.Enums;
 namespace DCHotelManagerCore.Lib.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20170220144334_picture")]
+    partial class picture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -106,7 +107,7 @@ namespace DCHotelManagerCore.Lib.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Pictures");
+                    b.ToTable("Picture");
                 });
 
             modelBuilder.Entity("DCHotelManagerCore.Lib.Models.Persistent.Room", b =>

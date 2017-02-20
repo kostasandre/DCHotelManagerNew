@@ -13,7 +13,6 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
 
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
 
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
 
@@ -30,7 +29,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         public Hotel()
         {
             this.Rooms = new List<Room>();
-
+            this.Pictures = new List<Picture>();
             this.Created = DateTime.Now;
             this.CreatedBy = Environment.MachineName;
         }
@@ -84,6 +83,11 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets the phone.
         /// </summary>
         public string Phone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pictures.
+        /// </summary>
+        public List<Picture> Pictures { get; set; }
 
         /// <summary>
         /// Gets or sets the rooms.

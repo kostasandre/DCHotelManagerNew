@@ -11,16 +11,16 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
 {
     #region
 
+    using System.Collections.Generic;
     using System.Net.Http;
-   
-    using DCHotelManagerCore.Lib.Models.Persistent;
-    using DCHotelManagerCore.UINew.Controllers.Interfaces;
-    using DCHotelManagerCore.UINew.Helpers;
-    using DCHotelManagerCore.Web.Api.Controllers.Interfaces;
-   
+    using System.Text;
+    using System.Threading.Tasks;
 
+    using DCHotelManagerCore.Lib.Models.Persistent;
 
     using Microsoft.AspNetCore.Mvc;
+
+    using Newtonsoft.Json;
 
     #endregion
 
@@ -28,22 +28,28 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     /// The mvc hotel controller.
     /// </summary>
     [Route("client/[controller]")]
-    public class MvcHotelController : Controller, IEntityUiController<Hotel>
+    public class MvcHotelController : Controller
     {
         /// <summary>
-        /// The hotel controller.
+        /// The create.
         /// </summary>
-        private readonly IEntityController<Hotel> hotelController;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MvcHotelController"/> class.
-        /// </summary>
-        /// <param name="hotelController">
-        /// The hotel controller.
+        /// <param name="hotel">
+        /// The hotel.
         /// </param>
-        public MvcHotelController(IEntityController<Hotel> hotelController)
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public async Task<IActionResult> Create(Hotel hotel)
         {
-            this.hotelController = hotelController;
+            var jsonHotel = JsonConvert.SerializeObject(hotel);
+
+            var httpClient = new HttpClient();
+            var response = await httpClient.PostAsync(
+                               "localhost:5005/api/createorupdate",
+                               new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
+            var newHotel = await response.Content.ReadAsStringAsync();
+            return null;
+            
         }
 
         /// <summary>
@@ -57,7 +63,8 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// </returns>
         public ViewResult CreateOrUpdateEntity(Hotel entity)
         {
-            return this.View(this.hotelController.CreateOrUpdateEntity(entity));
+            // return this.View(this.hotelController.CreateOrUpdateEntity(entity));
+            return null;
         }
 
         /// <summary>
@@ -71,7 +78,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// </returns>
         public ViewResult Delete(int id)
         {
-            this.hotelController.Delete(id);
+            // this.hotelController.Delete(id);
             return this.View();
         }
 
@@ -84,14 +91,16 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         [Route("getall")]
         public ViewResult GetAll()
         {
+            List<Hotel> hotels = null;
             var httpClient = new HttpClient();
-            var response = httpClient.GetAsync("http://localhost:5010/" + "api/Hotel/getall").Result;
+            var response = httpClient.GetAsync("http://localhost:5010/api/Hotel/getall").Result;
             if (response.IsSuccessStatusCode)
             {
                 var stateInfo = response.Content.ReadAsStringAsync().Result;
+                hotels = JsonConvert.DeserializeObject<List<Hotel>>(stateInfo);
             }
 
-            return this.View(this.hotelController.GetAll());
+            return this.View(hotels);
         }
 
         /// <summary>
@@ -105,7 +114,8 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// </returns>
         public ViewResult GetEntity(int id)
         {
-            return this.View(this.hotelController.GetEntity(id));
+            // return this.View(this.hotelController.GetEntity(id));
+            return null;
         }
     }
 }

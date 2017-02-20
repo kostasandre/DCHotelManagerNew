@@ -14,6 +14,7 @@ namespace DCHotelManagerCore.Lib.DbContext
     using DCHotelManagerCore.Lib.Models.Persistent;
 
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
     #endregion
 
@@ -33,8 +34,17 @@ namespace DCHotelManagerCore.Lib.DbContext
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataBaseContext"/> class.
+        /// </summary>
         public DataBaseContext()
-            : base(new DbContextOptions<DataBaseContext>())
+            : base(
+                new DbContextOptions<DataBaseContext>().WithExtension(
+                    new SqlServerOptionsExtension
+                        {
+                            ConnectionString =
+                                "Server=ANDREADAKIS01\\KOSTASANDRE;Database=DCHotelManagerCore;Trusted_Connection=True;MultipleActiveResultSets=true"
+                        }))
         {
         }
 
@@ -47,6 +57,11 @@ namespace DCHotelManagerCore.Lib.DbContext
         /// Gets or sets the hotels.
         /// </summary>
         public DbSet<Hotel> Hotels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pictures.
+        /// </summary>
+        public DbSet<Picture> Pictures { get; set; }
 
         /// <summary>
         /// Gets or sets the rooms.
