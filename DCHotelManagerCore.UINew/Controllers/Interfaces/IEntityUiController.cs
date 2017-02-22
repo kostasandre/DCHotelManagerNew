@@ -12,7 +12,9 @@ namespace DCHotelManagerCore.UINew.Controllers.Interfaces
     #region
 
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
+    using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
 
     using Microsoft.AspNetCore.Mvc;
@@ -37,7 +39,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Interfaces
         /// <returns>
         /// The <see cref="IActionResult"/>.
         /// </returns>
-        ViewResult CreateOrUpdateEntity(T entity);
+        ViewResult CreateOrUpdateEntity();
 
         /// <summary>
         /// The delete.
@@ -48,7 +50,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Interfaces
         /// <returns>
         /// The <see cref="IActionResult"/>.
         /// </returns>
-        ViewResult Delete(int id);
+        Task<IActionResult> Delete(IEnumerable<T> entities);
 
         /// <summary>
         /// The get all.

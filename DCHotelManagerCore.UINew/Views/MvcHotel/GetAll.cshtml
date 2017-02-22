@@ -1,28 +1,31 @@
-﻿@model System.Collections.Generic.IEnumerable<DCHotelManagerCore.Lib.Models.Persistent.Hotel>
+﻿@model DCHotelManagerCore.UINew.Controllers.Models.Hotel.HotelViewModel
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
 <h2>Hotels</h2>
+<form asp-controller="MvcHotel" asp-action="Delete" method="post">
+    
+    @foreach (var hotel in Model.Entities)
+    {
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <div class="thumbnail">
+                @*<img src="@hotel.ImageThumbnailUrl" alt="" />*@
 
-@foreach (var hotel in Model)
-{
-    <div class="col-sm-4 col-md-4 col-lg-4">
-        <div class="thumbnail">
-            @*<img src="@hotel.ImageThumbnailUrl" alt="" />*@
-            <div class="caption">
+                <div class="caption">
 
-                <h3 class="pull-right">@hotel.Email</h3>
-                <h3>
-                    <a>@hotel.Name</a>
-                </h3>
-                <p>@hotel.Address</p>
+                    <h3 class="pull-right">@hotel.Email</h3>
+                    @Html.CheckBoxFor(m => hotel.IsChecked)
+                    <h3>
+                        <a>@hotel.Name</a>
+                    </h3>
+                    <p>@hotel.Address</p>
+                </div>
             </div>
+
         </div>
-       
-    </div>
+    }
 
-
-
-}
+    <input type="submit" value="Delete" />
+</form>

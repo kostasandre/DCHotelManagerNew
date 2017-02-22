@@ -35,3 +35,8 @@ textarea {
         display: none;
     }
 }
+
+.image {
+    width: 1905px;
+    height: 300px;
+}

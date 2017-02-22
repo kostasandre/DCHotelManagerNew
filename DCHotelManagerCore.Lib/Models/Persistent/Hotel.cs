@@ -13,6 +13,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
 
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
 
@@ -68,6 +69,22 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets the id.
         /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether is checked.
+        /// </summary>
+        [NotMapped]
+        public bool IsChecked
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
+            }
+        }
 
         /// <summary>
         /// Gets or sets the manager.

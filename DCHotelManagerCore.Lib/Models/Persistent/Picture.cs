@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Pictures.cs" company="">
+// <copyright file="Picture.cs" company="">
 //   
 // </copyright>
 // <summary>
@@ -10,6 +10,8 @@
 namespace DCHotelManagerCore.Lib.Models.Persistent
 {
     #region
+
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
 
@@ -31,10 +33,24 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         public int Id { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether is checked.
+        /// </summary>
+        [NotMapped]
+        public bool IsChecked
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
-
-
     }
 }

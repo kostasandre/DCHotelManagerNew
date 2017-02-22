@@ -17,6 +17,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     using System.Threading.Tasks;
 
     using DCHotelManagerCore.Lib.Models.Persistent;
+    using DCHotelManagerCore.UINew.Controllers.Interfaces;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +29,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     /// The mvc hotel controller.
     /// </summary>
     [Route("client/[controller]")]
-    public class MvcHotelController : Controller
+    public class MvcHotelController : Controller //IEntityUiController<Hotel>
     {
         /// <summary>
         /// The create.
@@ -39,17 +40,24 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
+        [Route("Create")]
+        [HttpPost]
         public async Task<IActionResult> Create(Hotel hotel)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
             var jsonHotel = JsonConvert.SerializeObject(hotel);
 
             var httpClient = new HttpClient();
+
             var response = await httpClient.PostAsync(
-                               "localhost:5005/api/createorupdate",
+                               "http://localhost:5010/api/Hotel/createOrUpdate",
                                new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
-            var newHotel = await response.Content.ReadAsStringAsync();
-            return null;
-            
+            var newHotel = response.Content.ReadAsStringAsync().Result;
+            return this.RedirectToAction("GetAll");
         }
 
         /// <summary>
@@ -61,25 +69,39 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// <returns>
         /// The <see cref="ViewResult"/>.
         /// </returns>
-        public ViewResult CreateOrUpdateEntity(Hotel entity)
+        [Route("CreateOrUpdateEntity")]
+        public ViewResult CreateOrUpdateEntity()
         {
-            // return this.View(this.hotelController.CreateOrUpdateEntity(entity));
-            return null;
+            return this.View(new Hotel());
         }
 
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The id.
+        /// <param name="hotels">
+        /// The hotels.
         /// </param>
         /// <returns>
         /// The <see cref="ViewResult"/>.
         /// </returns>
-        public ViewResult Delete(int id)
+        [Route("delete")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(HotelViewModel hotelModel)
         {
-            // this.hotelController.Delete(id);
-            return this.View();
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            var jsonHotel = JsonConvert.SerializeObject(hotelModel.Entities);
+
+            var httpClient = new HttpClient();
+
+            var response = await httpClient.PostAsync(
+                               "http://localhost:5010/api/Hotel/delete",
+                               new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
+            var newHotel = response.Content.ReadAsStringAsync().Result;
+            return this.RedirectToAction("GetAll");
         }
 
         /// <summary>
@@ -100,9 +122,11 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
                 hotels = JsonConvert.DeserializeObject<List<Hotel>>(stateInfo);
             }
 
-            return this.View(hotels);
+            var viewmodel = new HotelViewModel();
+            viewmodel.Entities = hotels;
+            return this.View(viewmodel);
         }
-
+        
         /// <summary>
         /// The get entity.
         /// </summary>

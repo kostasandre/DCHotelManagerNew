@@ -12,6 +12,8 @@ namespace DCHotelManagerCore.UINew.Controllers
     #region
 
     using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
     using DCHotelManagerCore.UINew.Controllers.Interfaces;
@@ -39,7 +41,7 @@ namespace DCHotelManagerCore.UINew.Controllers
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public ViewResult CreateOrUpdateEntity(T entity)
+        public ViewResult CreateOrUpdateEntity()
         {
             throw new NotImplementedException();
         }
@@ -47,15 +49,15 @@ namespace DCHotelManagerCore.UINew.Controllers
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The id.
+        /// <param name="entities">
+        /// The entities.
         /// </param>
         /// <returns>
         /// The <see cref="ViewResult"/>.
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public ViewResult Delete(int id)
+        public Task<IActionResult> Delete(IEnumerable<T> entities)
         {
             throw new NotImplementedException();
         }
