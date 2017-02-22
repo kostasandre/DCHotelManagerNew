@@ -1,0 +1,17 @@
+﻿@model DCHotelManagerCore.Lib.Models.Persistent.Hotel
+<div class="col-sm-4 col-md-4 col-lg-4">
+    <div class="thumbnail">
+        @*<img src="@hotel.ImageThumbnailUrl" alt="" />*@
+
+        <div class="caption">
+
+            <h3 class="pull-right">@Model.Email</h3>
+            @Html.CheckBoxFor(m => Model.IsChecked)
+            <a asp-controller="MvcHotel" asp-action="CreateOrUpdateEntity" asp-route-id="@Model.Id">Edit</a>
+            <h3>
+                <a>@Model.Name</a>
+            </h3>
+            <p>@Model.Address</p>
+        </div>
+    </div>
+</div>

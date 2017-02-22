@@ -33,6 +33,8 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
             this.Pictures = new List<Picture>();
             this.Created = DateTime.Now;
             this.CreatedBy = Environment.MachineName;
+
+            this.IsChecked = false;
         }
 
         /// <summary>
@@ -74,17 +76,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets a value indicating whether is checked.
         /// </summary>
         [NotMapped]
-        public bool IsChecked
-        {
-            get
-            {
-                return false;
-            }
-
-            set
-            {
-            }
-        }
+        public bool IsChecked { get; set; }
 
         /// <summary>
         /// Gets or sets the manager.

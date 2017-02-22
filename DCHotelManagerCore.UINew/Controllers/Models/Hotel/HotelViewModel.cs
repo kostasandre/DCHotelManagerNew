@@ -22,9 +22,16 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     /// </summary>
     public class HotelViewModel : IEntityList<Hotel>
     {
+        public HotelViewModel()
+        {
+            this.Entities = new List<Hotel>();
+        }
+
         /// <summary>
         /// Gets or sets the entities.
         /// </summary>
         public List<Hotel> Entities { get; set; }
+
+        public string test { get; set; }
     }
 }

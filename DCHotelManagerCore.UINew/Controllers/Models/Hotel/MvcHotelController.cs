@@ -17,7 +17,6 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     using System.Threading.Tasks;
 
     using DCHotelManagerCore.Lib.Models.Persistent;
-    using DCHotelManagerCore.UINew.Controllers.Interfaces;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -25,12 +24,21 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
 
     #endregion
 
+    public class HotelViewComponent : ViewComponent
+    {
+        public async Task<IViewComponentResult> InvokeAsync(Hotel hotel)
+        {
+            return View(hotel);
+        }
+    }
+
     /// <summary>
     /// The mvc hotel controller.
     /// </summary>
     [Route("client/[controller]")]
-    public class MvcHotelController : Controller //IEntityUiController<Hotel>
+    public class MvcHotelController : Controller
     {
+        // IEntityUiController<Hotel>
         /// <summary>
         /// The create.
         /// </summary>
@@ -63,23 +71,24 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// <summary>
         /// The create or update entity.
         /// </summary>
-        /// <param name="entity">
-        /// The entity.
+        /// <param name="hotel">
+        /// The hotel.
         /// </param>
         /// <returns>
         /// The <see cref="ViewResult"/>.
         /// </returns>
         [Route("CreateOrUpdateEntity")]
-        public ViewResult CreateOrUpdateEntity()
+        public async Task<IActionResult> CreateOrUpdateEntity(Hotel hotel)
         {
-            return this.View(new Hotel());
+          
+            return this.View();
         }
 
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="hotels">
-        /// The hotels.
+        /// <param name="hotelModel">
+        /// The hotel Model.
         /// </param>
         /// <returns>
         /// The <see cref="ViewResult"/>.
@@ -122,11 +131,10 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
                 hotels = JsonConvert.DeserializeObject<List<Hotel>>(stateInfo);
             }
 
-            var viewmodel = new HotelViewModel();
-            viewmodel.Entities = hotels;
+            var viewmodel = new HotelViewModel { Entities = hotels, test = "Hello" };
             return this.View(viewmodel);
         }
-        
+
         /// <summary>
         /// The get entity.
         /// </summary>
