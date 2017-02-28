@@ -35,6 +35,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
             this.CreatedBy = Environment.MachineName;
 
             this.IsChecked = false;
+            this.Id = 0;
         }
 
         /// <summary>

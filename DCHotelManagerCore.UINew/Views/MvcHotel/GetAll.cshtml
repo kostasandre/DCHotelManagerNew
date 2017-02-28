@@ -19,14 +19,14 @@
 
                     <h3 class="pull-right">@Model.Entities[i].Email</h3>
                     @Html.CheckBoxFor(m => Model.Entities[i].IsChecked)
-                    <a asp-action="CreateOrUpdateEntity" asp-route-id="@Model.Entities[i].Id">Edit</a>
+                    <a asp-action="CreateOrUpdateEntity" asp-route-name="@Model.Entities[i].Name" asp-route-email="@Model.Entities[i].Email" asp-route-address="@Model.Entities[i].Address" asp-route-id="@Model.Entities[i].Id">Edit</a>
                     <h3>
                         <a>@Model.Entities[i].Name</a>
                     </h3>
                     <p>@Model.Entities[i].Address</p>
                 </div>
             </div>
-            
+      
             @Html.HiddenFor(m => Model.Entities[i].Id)
             @Html.HiddenFor(m => Model.Entities[i].Address)
             @Html.HiddenFor(m => Model.Entities[i].Created)

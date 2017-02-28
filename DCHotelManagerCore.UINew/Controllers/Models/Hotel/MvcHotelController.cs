@@ -47,10 +47,10 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         [HttpPost]
         public async Task<IActionResult> Create(Hotel hotel)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest(this.ModelState);
-            }
+            //if (!this.ModelState.IsValid)
+            //{
+            //    return this.BadRequest(this.ModelState);
+            //}
 
             var jsonHotel = JsonConvert.SerializeObject(hotel);
 
