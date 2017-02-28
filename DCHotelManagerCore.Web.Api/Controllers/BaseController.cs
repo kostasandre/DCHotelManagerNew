@@ -50,14 +50,12 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
+        /// <param name="entities"></param>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        [Route("delete/{id}")]
-        [HttpDelete]
-        public virtual void Delete(int id)
+        [Route("delete")]
+        [HttpPost]
+        public virtual void Delete(int[] entities)
         {
             throw new NotImplementedException();
         }

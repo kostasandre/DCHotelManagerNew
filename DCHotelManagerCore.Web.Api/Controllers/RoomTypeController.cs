@@ -70,12 +70,10 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
-        public override void Delete(int id)
+        /// <param name="entities"></param>
+        public override void Delete(int[] roomTypesId)
         {
-            this.roomTypeRepository.Delete(id);
+            this.roomTypeRepository.Delete(roomTypesId);
         }
 
         /// <summary>

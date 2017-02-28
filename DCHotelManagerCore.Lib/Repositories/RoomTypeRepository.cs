@@ -71,22 +71,24 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
+        /// <param name="customersId"></param>
+        /// <param name="entities"></param>
         /// <exception cref="ArgumentNullException">
         /// The billing type is null
         /// </exception>
-        public void Delete(int id)
+        public void Delete(int[] customersId)
         {
-            var roomType = this.dataBaseContext.RoomTypes.SingleOrDefault(x => x.Id == id);
-            if (roomType == null)
+            foreach (var id in customersId)
             {
-                throw new ArgumentNullException();
-            }
+                var localRoomType = this.dataBaseContext.Hotels.SingleOrDefault(x => x.Id == id);
+                if (localRoomType == null)
+                {
+                    throw new ArgumentNullException();
+                }
 
-            this.dataBaseContext.RoomTypes.Remove(roomType);
-            this.dataBaseContext.SaveChanges();
+                this.dataBaseContext.Hotels.Remove(localRoomType);
+                this.dataBaseContext.SaveChanges();
+            }
         }
 
         /// <summary>

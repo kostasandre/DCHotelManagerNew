@@ -71,22 +71,25 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The id.
+        /// <param name="customersId">
+        /// The customersId.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// Hotel is null
         /// </exception>
-        public void Delete(int id)
+        public void Delete(int[] hotelsId)
         {
-            var hotel = this.dataBaseContext.Hotels.SingleOrDefault(x => x.Id == id);
-            if (hotel == null)
+            foreach (var id in hotelsId)
             {
-                throw new ArgumentNullException();
-            }
+                var localHotel = this.dataBaseContext.Hotels.SingleOrDefault(x => x.Id == id);
+                if (localHotel == null)
+                {
+                    throw new ArgumentNullException();
+                }
 
-            this.dataBaseContext.Hotels.Remove(hotel);
-            this.dataBaseContext.SaveChanges();
+                this.dataBaseContext.Hotels.Remove(localHotel);
+                this.dataBaseContext.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -174,5 +177,8 @@ namespace DCHotelManagerCore.Lib.Repositories
             databaseHotel.UpdatedBy = Environment.MachineName;
             this.dataBaseContext.SaveChanges();
         }
+
+
+
     }
 }

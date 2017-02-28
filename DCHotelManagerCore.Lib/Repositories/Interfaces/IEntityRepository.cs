@@ -15,6 +15,7 @@ namespace DCHotelManagerCore.Lib.Repositories.Interfaces
     using System.Linq;
 
     using DCHotelManagerCore.Lib.DbContext;
+    using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
 
     #endregion
@@ -42,10 +43,8 @@ namespace DCHotelManagerCore.Lib.Repositories.Interfaces
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
-        void Delete(int id);
+        /// <param name="customersId"></param>
+        void Delete(int[] customersId );
 
         /// <summary>
         /// The read all list.

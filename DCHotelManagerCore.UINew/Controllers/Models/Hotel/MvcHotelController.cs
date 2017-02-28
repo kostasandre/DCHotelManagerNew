@@ -3,7 +3,7 @@
 //   
 // </copyright>
 // <summary>
-//   The mvc hotel controller.
+//   The hotel view component.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -11,10 +11,13 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
 {
     #region
 
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Web;
 
     using DCHotelManagerCore.Lib.Models.Persistent;
 
@@ -23,14 +26,6 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     using Newtonsoft.Json;
 
     #endregion
-
-    public class HotelViewComponent : ViewComponent
-    {
-        public async Task<IViewComponentResult> InvokeAsync(Hotel hotel)
-        {
-            return View(hotel);
-        }
-    }
 
     /// <summary>
     /// The mvc hotel controller.
@@ -80,7 +75,6 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         [Route("CreateOrUpdateEntity")]
         public async Task<IActionResult> CreateOrUpdateEntity(Hotel hotel)
         {
-          
             return this.View();
         }
 
@@ -102,14 +96,15 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
                 return this.BadRequest(this.ModelState);
             }
 
-            var jsonHotel = JsonConvert.SerializeObject(hotelModel.Entities);
+            var hotelList = hotelModel.Entities.Where(hotel => hotel.IsChecked).Select(motel => motel.Id).ToList();
+
+            var jsonHotel = JsonConvert.SerializeObject(hotelList);
 
             var httpClient = new HttpClient();
 
             var response = await httpClient.PostAsync(
-                               "http://localhost:5010/api/Hotel/delete",
-                               new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
-            var newHotel = response.Content.ReadAsStringAsync().Result;
+                               "http://localhost:5010/api/Hotel/delete", new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
+           
             return this.RedirectToAction("GetAll");
         }
 
@@ -131,7 +126,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
                 hotels = JsonConvert.DeserializeObject<List<Hotel>>(stateInfo);
             }
 
-            var viewmodel = new HotelViewModel { Entities = hotels, test = "Hello" };
+            var viewmodel = new HotelViewModel { Entities = hotels };
             return this.View(viewmodel);
         }
 

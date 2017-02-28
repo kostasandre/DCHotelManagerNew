@@ -26,5 +26,13 @@
     <ProjectReference Include="..\DCHotelManagerCore.Lib\DCHotelManagerCore.Lib.csproj" />
     <ProjectReference Include="..\DCHotelManagerCore.Web.Api\DCHotelManagerCore.Web.Api.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

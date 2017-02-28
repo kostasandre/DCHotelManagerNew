@@ -31,7 +31,5 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// Gets or sets the entities.
         /// </summary>
         public List<Hotel> Entities { get; set; }
-
-        public string test { get; set; }
     }
 }

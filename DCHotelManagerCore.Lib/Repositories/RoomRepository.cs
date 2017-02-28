@@ -64,22 +64,24 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The billing id.
-        /// </param>
+        /// <param name="customersId"></param>
+        /// <param name="entities"></param>
         /// <exception cref="ArgumentNullException">
         /// Room is null
         /// </exception>
-        public void Delete(int id)
+        public void Delete(int[] roomId)
         {
-            var room = this.dataBaseContext.Rooms.SingleOrDefault(x => x.Id == id);
-            if (room == null)
+            foreach (var id in roomId)
             {
-                throw new ArgumentNullException($"ArgumentNullException");
-            }
+                var localRoom = this.dataBaseContext.Hotels.SingleOrDefault(x => x.Id == id);
+                if (localRoom == null)
+                {
+                    throw new ArgumentNullException();
+                }
 
-            this.dataBaseContext.Rooms.Remove(room);
-            this.dataBaseContext.SaveChanges();
+                this.dataBaseContext.Hotels.Remove(localRoom);
+                this.dataBaseContext.SaveChanges();
+            }
         }
 
         /// <summary>
