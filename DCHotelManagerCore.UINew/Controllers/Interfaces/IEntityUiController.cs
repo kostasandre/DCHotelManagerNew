@@ -16,6 +16,8 @@ namespace DCHotelManagerCore.UINew.Controllers.Interfaces
 
     using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
+    using DCHotelManagerCore.UINew.Controllers.Models;
+    using DCHotelManagerCore.UINew.Controllers.Models.Hotel;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -33,24 +35,24 @@ namespace DCHotelManagerCore.UINew.Controllers.Interfaces
         /// <summary>
         /// The create or update entity.
         /// </summary>
-        /// <param name="entity">
-        /// The entity.
+        /// <param name="hotel">
+        /// The hotel.
         /// </param>
         /// <returns>
         /// The <see cref="IActionResult"/>.
         /// </returns>
-        ViewResult CreateOrUpdateEntity();
+        Task<IActionResult> CreateOrUpdateEntity(T entity);
 
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The id.
+        /// <param name="entities">
+        /// The entities.
         /// </param>
         /// <returns>
         /// The <see cref="IActionResult"/>.
         /// </returns>
-        Task<IActionResult> Delete(IEnumerable<T> entities);
+        Task<IActionResult> Delete(IList<T> entities);
 
         /// <summary>
         /// The get all.

@@ -2,23 +2,27 @@
 @using DCHotelManagerCore.Lib.Models.Persistent
 @using Microsoft.AspNetCore.Mvc.Razor
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
-@model DCHotelManagerCore.Lib.Models.Persistent.Hotel
+@model DCHotelManagerCore.Lib.Models.Persistent.Room
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<h2>Rooms</h2>
 
-<form asp-controller="MvcHotel" asp-action="Create" method="post">
+<form asp-controller="MvcRoom" asp-action="Create" method="post">
 
-    <label>Name</label>
-    @Html.TextBoxFor(model => model.Name)
-    <label>Email</label>
-    @Html.TextBoxFor(model => Model.Email)
-    <label>Address</label>
-    @Html.TextBoxFor(model => model.Address)
+    <label>Hotel Name</label>
+    @Html.TextBoxFor(model => model.HotelName)
+    <label>Hotel Id</label>
+    @Html.TextBoxFor(model => model.HotelId)
+    <label>Code</label>
+    @Html.TextBoxFor(model => Model.Code)
+    <label>Room Type</label>
+    @Html.TextBoxFor(model => model.RoomTypeId)
+    <label>Is Checked</label>
+    @Html.CheckBoxFor(model => model.IsChecked)
 
     @*<a asp-action="Create">Create New</a>*@
     <input type="submit" value="Create"/>

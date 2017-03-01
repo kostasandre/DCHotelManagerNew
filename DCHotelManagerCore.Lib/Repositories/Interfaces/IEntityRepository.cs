@@ -52,7 +52,7 @@ namespace DCHotelManagerCore.Lib.Repositories.Interfaces
         /// <returns>
         /// The <see cref="IList{List}"/>.
         /// </returns>
-        IList<T> ReadAllList();
+        IEnumerable<T> ReadAllList();
 
         /// <summary>
         /// The read all query.

@@ -18,6 +18,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers
 
     using Microsoft.AspNetCore.Mvc;
 
+    using Newtonsoft.Json;
+
     #endregion
 
     /// <summary>
@@ -82,10 +84,11 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <returns>
         /// The <see cref="IEnumerable{T}"/>.
         /// </returns>
-        public override IEnumerable<Hotel> GetAll()
+        public override JsonResult GetAll()
         {
-            var list = this.hotelRepository.ReadAllList();
-            return list;
+          
+            var jsonHotelList = this.hotelRepository.ReadAllList();
+            return new JsonResult(jsonHotelList);
         }
 
         /// <summary>

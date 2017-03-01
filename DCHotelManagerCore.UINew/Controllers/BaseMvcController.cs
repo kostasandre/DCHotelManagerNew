@@ -41,7 +41,7 @@ namespace DCHotelManagerCore.UINew.Controllers
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public ViewResult CreateOrUpdateEntity()
+        public virtual async Task<IActionResult> CreateOrUpdateEntity(T entity)
         {
             throw new NotImplementedException();
         }
@@ -57,7 +57,7 @@ namespace DCHotelManagerCore.UINew.Controllers
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public Task<IActionResult> Delete(IEnumerable<T> entities)
+        public virtual Task<IActionResult> Delete(IList<T> entities)
         {
             throw new NotImplementedException();
         }
@@ -71,7 +71,7 @@ namespace DCHotelManagerCore.UINew.Controllers
         /// <exception cref="NotImplementedException">
         /// </exception>
         [Route("getall")]
-        public ViewResult GetAll()
+        public virtual ViewResult GetAll()
         {
             throw new NotImplementedException();
         }
@@ -87,7 +87,7 @@ namespace DCHotelManagerCore.UINew.Controllers
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public ViewResult GetEntity(int id)
+        public virtual ViewResult GetEntity(int id)
         {
             throw new NotImplementedException();
         }

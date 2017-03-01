@@ -18,6 +18,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers
 
     using Microsoft.AspNetCore.Mvc;
 
+    using Newtonsoft.Json;
+
     #endregion
 
     /// <summary>
@@ -70,7 +72,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// The delete.
         /// </summary>
         /// <param name="entities"></param>
-        public override void Delete(int[] customersId)
+        public override void Delete([FromBody]int[] customersId)
         {
             this.customerRepository.Delete(customersId);
         }
@@ -81,10 +83,10 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        public override IEnumerable<Customer> GetAll()
+        public override JsonResult GetAll()
         {
-            var list = this.customerRepository.ReadAllList();
-            return list;
+            var customerList = this.customerRepository.ReadAllList();
+            return new JsonResult(customerList);
         }
     }
 }

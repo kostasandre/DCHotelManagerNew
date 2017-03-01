@@ -1,17 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MvcHotelController.cs" company="">
+// <copyright file="MvcRoomController.cs" company="">
 //   
 // </copyright>
 // <summary>
-//   The mvc hotel controller.
+//   The mvc room controller.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
+namespace DCHotelManagerCore.UINew.Controllers.Models.Room
 {
     #region
 
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
@@ -27,33 +26,33 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     #endregion
 
     /// <summary>
-    /// The mvc hotel controller.
+    /// The mvc room controller.
     /// </summary>
     [Route("client/[controller]")]
-    public class MvcHotelController : BaseMvcController<Hotel>
+    public class MvcRoomController : BaseMvcController<Room>
     {
         // IEntityUiController<Hotel>
 
         /// <summary>
         /// The create.
         /// </summary>
-        /// <param name="hotel">
-        /// The hotel.
+        /// <param name="room">
+        /// The room.
         /// </param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
         [Route("Create")]
         [HttpPost]
-        public async Task<IActionResult> Create(Hotel hotel)
+        public async Task<IActionResult> Create(Room room)
         {
-            var jsonHotel = JsonConvert.SerializeObject(hotel);
+            var jsonRoom = JsonConvert.SerializeObject(room);
 
             var httpClient = new HttpClient();
 
             var response = await httpClient.PostAsync(
-                               "http://localhost:5010/api/Hotel/createOrUpdate",
-                               new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
+                               "http://localhost:5010/api/Room/createOrUpdate",
+                               new StringContent(jsonRoom, Encoding.UTF8, "application/json"));
             var newHotel = response.Content.ReadAsStringAsync().Result;
             return this.RedirectToAction("GetAll");
         }
@@ -61,14 +60,14 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// <summary>
         /// The create or update entity.
         /// </summary>
-        /// <param name="hotel">
-        /// The hotel.
+        /// <param name="room">
+        /// The room.
         /// </param>
         /// <returns>
         /// The <see cref="ViewResult"/>.
         /// </returns>
-        [Route("CreateOrUpdateEntity")]
-        public override async Task<IActionResult> CreateOrUpdateEntity(Hotel hotel)
+        [Route("CreateOrUpdateRoom")]
+        public async Task<IActionResult> CreateOrUpdateRoom(Room room)
         {
             return this.View();
         }
@@ -76,48 +75,32 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="hotels">
-        /// The hotels.
+        /// <param name="rooms">
+        /// The rooms.
         /// </param>
         /// <returns>
         /// The <see cref="ViewResult"/>.
         /// </returns>
         [Route("delete")]
         [HttpPost]
-        public override async Task<IActionResult> Delete(IList<Hotel> hotels)
+        public override async Task<IActionResult> Delete(IList<Room> rooms)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.BadRequest(this.ModelState);
             }
 
-            var hotelList = hotels.Where(hotel => hotel.IsChecked).Select(motel => motel.Id).ToList();
+            var roomList = rooms.Where(room => room.IsChecked).Select(room => room.Id).ToList();
 
-            var jsonHotel = JsonConvert.SerializeObject(hotelList);
+            var jsonRoom = JsonConvert.SerializeObject(roomList);
 
             var httpClient = new HttpClient();
 
             var response = await httpClient.PostAsync(
-                               "http://localhost:5010/api/Hotel/delete",
-                               new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
+                               "http://localhost:5010/api/Room/delete",
+                               new StringContent(jsonRoom, Encoding.UTF8, "application/json"));
 
             return this.RedirectToAction("GetAll");
-        }
-
-        /// <summary>
-        /// The delete.
-        /// </summary>
-        /// <param name="ti8eleiTo">
-        /// The ti 8 elei to.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
-        public Task<IActionResult> Delete(IEntityList<Hotel> ti8eleiTo)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -129,16 +112,16 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         [Route("getall")]
         public override ViewResult GetAll()
         {
-            List<Hotel> hotels = null;
+            List<Room> rooms = null;
             var httpClient = new HttpClient();
-            var response = httpClient.GetAsync("http://localhost:5010/api/Hotel/getall").Result;
+            var response = httpClient.GetAsync("http://localhost:5010/api/Room/getall").Result;
             if (response.IsSuccessStatusCode)
             {
                 var stateInfo = response.Content.ReadAsStringAsync().Result;
-                hotels = JsonConvert.DeserializeObject<List<Hotel>>(stateInfo);
+                rooms = JsonConvert.DeserializeObject<List<Room>>(stateInfo);
             }
-            
-            return this.View(hotels);
+
+            return this.View(rooms);
         }
 
         /// <summary>

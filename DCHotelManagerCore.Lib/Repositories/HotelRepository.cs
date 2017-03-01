@@ -14,12 +14,15 @@ namespace DCHotelManagerCore.Lib.Repositories
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web.Script.Serialization;
 
     using DCHotelManagerCore.Lib.DbContext;
     using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Repositories.Interfaces;
 
     using Microsoft.EntityFrameworkCore;
+
+    using Newtonsoft.Json;
 
     #endregion
 
@@ -47,15 +50,15 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <summary>
         /// The create.
         /// </summary>
-        /// <param name="billing">
+        /// <param name="room">
         /// The billing.
         /// </param>
         /// <returns>
         /// The <see cref="Hotel"/>.
         /// </returns>
-        public Hotel Create(Hotel billing)
+        public Hotel Create(Hotel hotel)
         {
-            this.dataBaseContext.Hotels.Add(billing);
+            this.dataBaseContext.Hotels.Add(hotel);
             try
             {
                 this.dataBaseContext.SaveChanges();
@@ -65,7 +68,7 @@ namespace DCHotelManagerCore.Lib.Repositories
                 throw;
             }
 
-            return billing;
+            return hotel;
         }
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <returns>
         /// The <see cref="IList{Hotel}"/>.
         /// </returns>
-        public IList<Hotel> ReadAllList()
+        public IEnumerable<Hotel> ReadAllList()
         {
             return this.dataBaseContext.Hotels.Include("Rooms").ToList();
         }

@@ -103,7 +103,7 @@ namespace DCHotelManagerCore.UINew
             //services.AddTransient<IEntityController<Customer>, CustomerController>();
 
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
     }
 }

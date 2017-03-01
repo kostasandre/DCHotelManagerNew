@@ -52,7 +52,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers.Interfaces
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        IEnumerable<T> GetAll();
+        JsonResult GetAll();
 
         /// <summary>
         /// The get.
