@@ -12,23 +12,32 @@
 <h2>Rooms</h2>
 
 <form asp-controller="MvcRoom" asp-action="Create" method="post">
-
-    <label>Hotel Name</label>
-    @Html.TextBoxFor(model => model.HotelName)
-    <label>Hotel Id</label>
-    @Html.TextBoxFor(model => model.HotelId)
+   
     <label>Code</label>
     @Html.TextBoxFor(model => Model.Code)
-    <label>Room Type</label>
-    @Html.TextBoxFor(model => model.RoomTypeId)
-    <label>Is Checked</label>
-    @Html.CheckBoxFor(model => model.IsChecked)
+    
+   @if (Model.Id != 0)
+   {
+       <label>Hotels</label>
+       @Html.DropDownList("Hotels", Model.AllHotels.Where(hotel => hotel.Id == Model.HotelId).Select(m => new SelectListItem() { Text = m.Name, Value = m.CreatedBy.ToString() }).ToList())
+       <label>RoomType</label>
+       @Html.DropDownList("RoomType", Model.AllRoomTypes.Where(roomType => roomType.Id == Model.RoomTypeId).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())
+
+   }
+   else
+   {
+    <label>Hotels</label>
+    @Html.DropDownListFor(m => m.HotelId, Model.AllHotels.Select(m => new SelectListItem() { Text = m.Name, Value = m.Id.ToString() }).ToList())
+    <label>RoomType</label>
+    @Html.DropDownListFor(m => m.RoomTypeId, Model.AllRoomTypes.Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())
+    
+   }
 
     @*<a asp-action="Create">Create New</a>*@
-    <input type="submit" value="Create"/>
+    <input type="submit" value="Create" />
     @*<button type="button" class="btn btn-default" asp-controller="MvcHotel" asp-action="Create" asp-route-id="@Model.Name"></button>*@
 
     @*<a asp-controller="MvcHotel" asp-action="Create" asp-route-hotelName="10"> ProductName</a>*@
-    <input type="hidden" asp-for="Id"/>
+    <input type="hidden" asp-for="Id" />
 
 </form>

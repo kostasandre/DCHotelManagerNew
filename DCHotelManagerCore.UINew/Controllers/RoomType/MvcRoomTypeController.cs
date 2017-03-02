@@ -44,6 +44,15 @@ namespace DCHotelManagerCore.UINew.Controllers.RoomType
         [Route("CreateOrUpdateRoomType")]
         public async Task<IActionResult> CreateOrUpdateRoomType(RoomType roomType)
         {
+            var httpClient = new HttpClient();
+            var response = httpClient.GetAsync($"http://localhost:5010/api/RoomType/getentity/{roomType.Id}").Result;
+            if (response.IsSuccessStatusCode && roomType.Id != 0)
+            {
+                var stateInfo = response.Content.ReadAsStringAsync().Result;
+                var localRoomType = JsonConvert.DeserializeObject<RoomType>(stateInfo);
+                
+                    return this.View(localRoomType);
+            }
             return this.View();
         }
 
@@ -110,8 +119,16 @@ namespace DCHotelManagerCore.UINew.Controllers.RoomType
         /// </returns>
         public override ViewResult GetEntity(int id)
         {
-            // return this.View(this.hotelController.GetEntity(id));
-            return null;
+            var httpClient = new HttpClient();
+            var response = httpClient.GetAsync($"http://localhost:5010/api/RoomType/getentity?id={id}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var stateInfo = response.Content.ReadAsStringAsync().Result;
+                var localRoomType = JsonConvert.DeserializeObject<RoomType>(stateInfo);
+                return this.View(localRoomType);
+            }
+
+            return this.View();
         }
     }
 }

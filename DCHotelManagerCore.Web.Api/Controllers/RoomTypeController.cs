@@ -91,5 +91,21 @@ namespace DCHotelManagerCore.Web.Api.Controllers
             var roomTypeList = this.roomTypeRepository.ReadAllList();
             return new JsonResult(roomTypeList);
         }
+
+        /// <summary>
+        /// The get entity.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        [Route("getentity/{id}")]
+        public override JsonResult GetEntity(int id)
+        {
+            var jsonRoomType = this.roomTypeRepository.ReadOne(id);
+            return new JsonResult(jsonRoomType);
+        }
     }
 }

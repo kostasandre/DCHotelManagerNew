@@ -112,5 +112,6 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets a value indicating whether wi fi.
         /// </summary>
         public bool WiFi { get; set; }
+      
     }
 }

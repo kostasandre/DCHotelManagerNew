@@ -29,7 +29,8 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// </summary>
         public Room()
         {
-            this.Hotel = new Hotel();
+            this.AllHotels = new List<Hotel>();
+            this.AllRoomTypes = new List<RoomType>();
             this.IsChecked = false;
             this.Pictures = new List<Picture>();
             this.Created = DateTime.Now;
@@ -73,11 +74,6 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         public int HotelId { get; set; }
 
         /// <summary>
-        /// The hotel name.
-        /// </summary>
-        public string HotelName => this.Hotel.Name;
-
-        /// <summary>
         /// Gets or sets the id.
         /// </summary>
         public int Id { get; set; }
@@ -114,5 +110,27 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets the updated by.
         /// </summary>
         public string UpdatedBy { get; set; }
+
+        #region Non Persistent Properties
+
+        /// <summary>
+        /// Gets or sets the all hotels.
+        /// </summary>
+        [NotMapped]
+        public List<Hotel> AllHotels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the all room types.
+        /// </summary>
+        [NotMapped]
+        public List<RoomType> AllRoomTypes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected room type.
+        /// </summary>
+        [NotMapped]
+        public RoomType SelectedRoomType { get; set; }
+
+        #endregion 
     }
 }

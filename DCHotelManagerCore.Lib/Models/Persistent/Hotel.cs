@@ -124,9 +124,15 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
 
         #region Non Persistent Properties
 
+        /// <summary>
+        /// Gets or sets the selected rooms.
+        /// </summary>
         [NotMapped]
         public List<Room> SelectedRooms { get; set; }
 
+        /// <summary>
+        /// Gets or sets the all rooms.
+        /// </summary>
         [NotMapped]
         public List<Room> AllRooms { get; set; }
 

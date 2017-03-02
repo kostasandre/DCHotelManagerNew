@@ -46,8 +46,11 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Room
         [HttpPost]
         public async Task<IActionResult> Create(Room room)
         {
+            room.Hotel = null;
+
             var jsonRoom = JsonConvert.SerializeObject(room);
 
+            
             var httpClient = new HttpClient();
 
             var response = await httpClient.PostAsync(
@@ -69,6 +72,32 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Room
         [Route("CreateOrUpdateRoom")]
         public async Task<IActionResult> CreateOrUpdateRoom(Room room)
         {
+            var localRoom = new Room();
+            
+
+            var httpClient = new HttpClient();
+            var response = httpClient.GetAsync($"http://localhost:5010/api/Room/getentity/{room.Id}").Result;
+            if (response.IsSuccessStatusCode && room.Id != 0)
+            {
+                var stateInfo = response.Content.ReadAsStringAsync().Result;
+                 localRoom = JsonConvert.DeserializeObject<Room>(stateInfo);
+            }
+
+            response = httpClient.GetAsync($"http://localhost:5010/api/Hotel/getall").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var stateInfo = response.Content.ReadAsStringAsync().Result;
+                localRoom.AllHotels = JsonConvert.DeserializeObject<List<Hotel>>(stateInfo);
+            }
+
+            response = httpClient.GetAsync($"http://localhost:5010/api/RoomType/getall").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var stateInfo = response.Content.ReadAsStringAsync().Result;
+                localRoom.AllRoomTypes = JsonConvert.DeserializeObject<List<RoomType>>(stateInfo);
+                return this.View(localRoom);
+            }
+
             return this.View();
         }
 
@@ -133,6 +162,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Room
         /// <returns>
         /// The <see cref="ViewResult"/>.
         /// </returns>
+        [Route("getentity/{id}")]
         public override ViewResult GetEntity(int id)
         {
             // return this.View(this.hotelController.GetEntity(id));

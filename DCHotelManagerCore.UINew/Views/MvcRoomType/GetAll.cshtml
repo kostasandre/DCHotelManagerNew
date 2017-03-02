@@ -20,7 +20,7 @@
 
                     <h3 class="pull-right">@Model[i].BedType</h3>
                     @Html.CheckBoxFor(m => Model[i].IsChecked)
-                    <a asp-action="CreateOrUpdateRoomType" asp-route-code="@Model[i].Code" asp-route-bedtype="@Model[i].BedType" asp-route-view="@Model[i].View" asp-route-ischecked="@Model[i].IsChecked" asp-route-id="@Model[i].Id">Edit</a>
+                    <a asp-action="CreateOrUpdateRoomType" asp-route-id="@Model[i].Id">Edit</a>
                     <h3>
                         <a>@Model[i].BedType</a>
                     </h3>
