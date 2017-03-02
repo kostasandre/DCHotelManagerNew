@@ -34,6 +34,9 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
             this.Created = DateTime.Now;
             this.CreatedBy = Environment.MachineName;
 
+            this.SelectedRooms = new List<Room>();
+            this.AllRooms = new List<Room>();
+
             this.IsChecked = false;
             this.Id = 0;
         }
@@ -118,5 +121,15 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets the updated by.
         /// </summary>
         public string UpdatedBy { get; set; }
+
+        #region Non Persistent Properties
+
+        [NotMapped]
+        public List<Room> SelectedRooms { get; set; }
+
+        [NotMapped]
+        public List<Room> AllRooms { get; set; }
+
+        #endregion 
     }
 }

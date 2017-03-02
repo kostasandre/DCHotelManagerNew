@@ -80,7 +80,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// The get entity.
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <returns>
         /// The <see cref="T"/>.
@@ -88,8 +88,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <exception cref="NotImplementedException">
         /// </exception>
         [HttpGet]
-        [Route("getone/{id}")]
-        public virtual T GetEntity(int id)
+        [Route("getentity/{id}")]
+        public virtual JsonResult GetEntity(int id)
         {
             throw new NotImplementedException();
         }

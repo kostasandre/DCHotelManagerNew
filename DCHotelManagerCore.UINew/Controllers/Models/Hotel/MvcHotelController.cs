@@ -70,6 +70,22 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         [Route("CreateOrUpdateEntity")]
         public override async Task<IActionResult> CreateOrUpdateEntity(Hotel hotel)
         {
+            var httpClient = new HttpClient();
+            var response = httpClient.GetAsync($"http://localhost:5010/api/Hotel/getentity/{hotel.Id}").Result;
+            if (response.IsSuccessStatusCode && hotel.Id != 0)
+            {
+                var stateInfo = response.Content.ReadAsStringAsync().Result;
+                var localHotel = JsonConvert.DeserializeObject<Hotel>(stateInfo);
+
+                response = httpClient.GetAsync($"http://localhost:5010/api/Room/getall").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    stateInfo = response.Content.ReadAsStringAsync().Result;
+                    localHotel.AllRooms = JsonConvert.DeserializeObject<List<Room>>(stateInfo);
+                    return this.View(localHotel);
+                }
+            }
+
             return this.View();
         }
 
@@ -137,7 +153,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
                 var stateInfo = response.Content.ReadAsStringAsync().Result;
                 hotels = JsonConvert.DeserializeObject<List<Hotel>>(stateInfo);
             }
-            
+
             return this.View(hotels);
         }
 
@@ -150,10 +166,19 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// <returns>
         /// The <see cref="ViewResult"/>.
         /// </returns>
+        [Route("getentity/{id}")]
         public override ViewResult GetEntity(int id)
         {
-            // return this.View(this.hotelController.GetEntity(id));
-            return null;
+            var httpClient = new HttpClient();
+            var response = httpClient.GetAsync($"http://localhost:5010/api/Hotel/getentity?id={id}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var stateInfo = response.Content.ReadAsStringAsync().Result;
+                var localHotel = JsonConvert.DeserializeObject<Hotel>(stateInfo);
+                return this.View(localHotel);
+            }
+
+            return this.View();
         }
     }
 }

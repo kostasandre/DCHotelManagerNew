@@ -99,7 +99,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public IEnumerable<RoomType> ReadAllList()
         {
-            return null;
+            return this.dataBaseContext.RoomTypes;
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public IQueryable<RoomType> ReadAllQuery(DataBaseContext context)
         {
-            return context.RoomTypes.Include("Rooms");
+            return context.RoomTypes;
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public RoomType ReadOne(int id)
         {
-            var roomType = this.dataBaseContext.RoomTypes.Include("Rooms").SingleOrDefault(x => x.Id == id);
+            var roomType = this.dataBaseContext.RoomTypes.SingleOrDefault(x => x.Id == id);
             return roomType;
         }
 

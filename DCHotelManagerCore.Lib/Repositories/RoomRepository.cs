@@ -94,7 +94,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public IEnumerable<Room> ReadAllList()
         {
-            return this.dataBaseContext.Rooms.Include("RoomType").ToList();
+            return this.dataBaseContext.Rooms.ToList();
             
         }
 
@@ -109,7 +109,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public IQueryable<Room> ReadAllQuery(DataBaseContext context)
         {
-            return context.Rooms.Include("Hotel").Include("RoomType");
+            return context.Rooms;
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public Room ReadOne(int id)
         {
-            var room = this.dataBaseContext.Rooms.Include("Hotel").Include("RoomType").SingleOrDefault(x => x.Id == id);
+            var room = this.dataBaseContext.Rooms.SingleOrDefault(x => x.Id == id);
             return room;
         }
 
@@ -136,17 +136,17 @@ namespace DCHotelManagerCore.Lib.Repositories
         public void Update(Room room)
         {
             var databaseRoom =
-                this.dataBaseContext.Rooms.Include("Hotel").Include("RoomType").SingleOrDefault(x => x.Id == room.Id);
+                this.dataBaseContext.Rooms.SingleOrDefault(x => x.Id == room.Id);
             if (databaseRoom == null)
             {
                 return;
             }
 
-            // var databaseHotel = dataBaseContext.Hotels.SingleOrDefault(x => x.Id == room.HotelId);          //to evala se sxolio giati sto update den mporoume na allaksoume Hotel
-            // databaseRoom.HotelId = databaseHotel.Id;                                               //to evala se sxolio giati sto update den mporoume na allaksoume Hotel
+            // var databaseHotel = dataBaseContext.Hotels.SingleOrDefault(x => x.Id == room.HotelId);          
+            // databaseRoom.HotelId = databaseHotel.Id;                                               
             databaseRoom.Code = room.Code;
 
-            // databaseRoom.RoomTypeId = room.RoomTypeId;                                            // to evala se sxolio giati sto update den mporoume na allaksoume room Type
+            // databaseRoom.RoomTypeId = room.RoomTypeId;                                           
             databaseRoom.Updated = DateTime.Now;
             databaseRoom.UpdatedBy = Environment.MachineName;
 

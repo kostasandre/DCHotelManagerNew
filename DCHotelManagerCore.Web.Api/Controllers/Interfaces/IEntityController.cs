@@ -58,11 +58,11 @@ namespace DCHotelManagerCore.Web.Api.Controllers.Interfaces
         /// The get.
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        T GetEntity(int id);
+        JsonResult GetEntity(int id);
     }
 }

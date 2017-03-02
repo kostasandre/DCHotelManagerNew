@@ -95,15 +95,16 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// The get entity.
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <returns>
         /// The <see cref="Hotel"/>.
         /// </returns>
-        public override Hotel GetEntity(int id)
+        [Route("getentity/{id}")]
+        public override JsonResult GetEntity(int id)
         {
-            var hotel = this.hotelRepository.ReadOne(id);
-            return hotel;
+            var jsonHotel = this.hotelRepository.ReadOne(id);
+            return new JsonResult(jsonHotel);
         }
     }
 }
