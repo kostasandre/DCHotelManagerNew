@@ -82,8 +82,15 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
                 {
                     stateInfo = response.Content.ReadAsStringAsync().Result;
                     localHotel.AllRooms = JsonConvert.DeserializeObject<List<Room>>(stateInfo);
-                    return this.View(localHotel);
                 }
+
+                //response = httpClient.GetAsync($"http://localhost:5010/api/Picture/getall").Result;
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    stateInfo = response.Content.ReadAsStringAsync().Result;
+                //    localHotel.Pictures = JsonConvert.DeserializeObject<List<Picture>>(stateInfo);
+                //    return this.View(localHotel);
+                //}
             }
 
             return this.View();
@@ -152,7 +159,24 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
             {
                 var stateInfo = response.Content.ReadAsStringAsync().Result;
                 hotels = JsonConvert.DeserializeObject<List<Hotel>>(stateInfo);
+
+                response = httpClient.GetAsync($"http://localhost:5010/api/Picture/getall").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    stateInfo = response.Content.ReadAsStringAsync().Result;
+                    var pictures = JsonConvert.DeserializeObject<List<Picture>>(stateInfo);
+
+                    foreach (var hotel in hotels)
+                    {
+                        foreach (var picture in pictures)
+                        {
+                            //if(hotel.Id == picture.)
+                        }
+                    }
+                }
             }
+
+
 
             return this.View(hotels);
         }

@@ -1,4 +1,5 @@
 ﻿@using System.IO
+@using DCHotelManagerCore.Lib.Enums
 @using DCHotelManagerCore.Lib.Models.Persistent
 @using Microsoft.AspNetCore.Mvc.Razor
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
@@ -13,12 +14,24 @@
 
 <form asp-controller="MvcRoomType" asp-action="Create" method="post">
 
-    <label>Bed Type</label>
-    @Html.TextBoxFor(model => model.BedType)
+    @if (Model != null)
+    {
+
+        <label>Bed Type</label>
+        @Html.TextBoxFor(model => model.BedType, new { @readonly = "readonly" })
+        <label>View</label>
+        @Html.TextBoxFor(model => model.View, new { @readonly = "readonly" })
+    }
+    else
+    {
+        <label>Bed Type</label>
+        <select asp-for="BedType" asp-items="Html.GetEnumSelectList<DCHotelManagerCore.Lib.Enums.BedType>()"></select>
+        <label>View</label>
+        <select asp-for="View" asp-items="Html.GetEnumSelectList<DCHotelManagerCore.Lib.Enums.View>()"></select>
+    }
     <label>Code</label>
     @Html.TextBoxFor(model => model.Code)
-    <label>View</label>
-    @Html.TextBoxFor(model => model.View)
+    
     <label>Shauna</label>
     @Html.CheckBoxFor(model => Model.Sauna)
     <label>Tv</label>
