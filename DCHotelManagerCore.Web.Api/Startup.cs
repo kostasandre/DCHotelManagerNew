@@ -87,6 +87,7 @@ namespace DCHotelManagerCore.Web.Api
             services.AddTransient<IEntityRepository<Room>, RoomRepository>();
             services.AddTransient<IEntityRepository<RoomType>, RoomTypeRepository>();
             services.AddTransient<IEntityRepository<Customer>, CustomerRepository>();
+            services.AddTransient<IEntityRepository<Picture>, PictureRepository>();
 
             // Add framework services.
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

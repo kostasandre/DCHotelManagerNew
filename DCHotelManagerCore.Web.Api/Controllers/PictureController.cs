@@ -1,18 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="PictureController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The picture controller.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace DCHotelManagerCore.Web.Api.Controllers
 {
+    #region
+
+    using System.Collections.Generic;
+
     using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Repositories.Interfaces;
 
     using Microsoft.AspNetCore.Mvc;
 
+    #endregion
 
+    /// <summary>
+    /// The picture controller.
+    /// </summary>
     [Route("api/[controller]")]
-    public class PictureController:BaseController<Picture>
+    public class PictureController : BaseController<Picture>
     {
         /// <summary>
         /// The hotel repository.
@@ -20,10 +32,11 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         private readonly IEntityRepository<Picture> pictureRepository;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PictureController"/> class. 
         /// Initializes a new instance of the <see cref="RoomController"/> class.
         /// </summary>
-        /// <param name="roomRepository">
-        /// The room Repository.
+        /// <param name="pictureRepository">
+        /// The picture Repository.
         /// </param>
         public PictureController(IEntityRepository<Picture> pictureRepository)
         {
@@ -56,8 +69,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="roomsId">
-        /// The rooms Id.
+        /// <param name="picturesId">
+        /// The pictures Id.
         /// </param>
         public override void Delete([FromBody] int[] picturesId)
         {
@@ -68,7 +81,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// The get all.
         /// </summary>
         /// <returns>
-        /// The <see cref="IEnumerable"/>.
+        /// The <see cref="IEnumerable{T}"/>.
         /// </returns>
         public override JsonResult GetAll()
         {
@@ -80,7 +93,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// The get entity.
         /// </summary>
         /// <param name="id">
-        ///     The id.
+        /// The id.
         /// </param>
         /// <returns>
         /// The <see cref="Hotel"/>.

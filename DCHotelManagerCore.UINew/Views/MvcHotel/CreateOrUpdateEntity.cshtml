@@ -9,27 +9,48 @@
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+@if (Model != null)
+{
+    <div class="container" style="width: 100%">
+        <div class="row">
+            <div class="col-lg-3  col-md-3 col-sm-3 col-xs-4">
+                <h2>Hotel @Model.Name</h2>
+            </div>
+            <div class="col-lg-7  col-md-6 col-sm-6 col-xs-4">
+            </div>
+            <div class="col-lg-2 col-md-2  col-sm-2  col-xs-4">
+                <img class="img-rounded image-title" src="data:image;base64,@Convert.ToBase64String(Model.Pictures[0].ByteArray)" alt="No image to display"/>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h2>Create Hotel</h2>
+}
+
 
 <form asp-controller="MvcHotel" asp-action="Create" method="post">
 
 
-    <label>Name</label>
-    @Html.TextBoxFor(model => model.Name)
+    @Html.TextBoxFor(model => Model.Name)
     <label>Manager</label>
-    @Html.TextBoxFor(model => model.Manager)
+    @Html.TextBoxFor(model => Model.Manager)
     <label>Email</label>
     @Html.TextBoxFor(model => Model.Email)
     <label>Address</label>
-    @Html.TextBoxFor(model => model.Address)
+    @Html.TextBoxFor(model => Model.Address)
     <label>Phone</label>
-    @Html.TextBoxFor(model => model.Phone)
+    @Html.TextBoxFor(model => Model.Phone)
     <label>TaxId</label>
-    @Html.TextBoxFor(hotel => hotel.TaxId)
+    @Html.TextBoxFor(hotel => Model.TaxId)
+
 
     @*@Html.DropDownList("HotelRooms", Model.AllRooms.Where(room => room.HotelId == Model.Id).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())*@
     @if (Model != null)
     {
+
+        <label>Name</label>
         for (int i = 0; i < Model.AllRooms.Where(room => room.HotelId == Model.Id).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList().Count(); i++)
         {
             <div class="col-sm-4 col-md-4 col-lg-4">
@@ -44,6 +65,7 @@
                             <a>@Model.Name</a>
                         </h3>
                         <p>@Model.AllRooms[i].RoomTypeId</p>
+
                     </div>
                 </div>
             </div>

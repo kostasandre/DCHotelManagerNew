@@ -9,7 +9,26 @@
     Layout = "_Layout";
 }
 
-<h2>Rooms</h2>
+@if (Model.Id != 0)
+{
+    var roomType = Model.AllRoomTypes.Where(x => x.Id == Model.RoomTypeId).ToList();
+    <div class="container" style="width: 100%">
+        <div class="row">
+            <div class="col-lg-4  col-md-5 col-sm-6 col-xs-6">
+                <h2>Room Type @roomType[0].Code</h2>
+            </div>
+            <div class="col-lg-6  col-md-4 col-sm-3 col-xs-2">
+            </div>
+            <div class="col-lg-2 col-md-2  col-sm-2  col-xs-2">
+                <img class="img-rounded image-title" src="data:image;base64,@Convert.ToBase64String(Model.Pictures[0].ByteArray)" alt="No image to display"/>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h2>Create Room</h2>
+}
 
 <form asp-controller="MvcRoom" asp-action="Create" method="post">
    

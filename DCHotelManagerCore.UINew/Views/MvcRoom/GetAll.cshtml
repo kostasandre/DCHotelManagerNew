@@ -25,6 +25,7 @@
                         <a>@Model[i].Hotel?.Name</a>
                     </h3>
                     <p>@Model[i].Code</p>
+                    <img class="img-thumbnail img-rounded" src="data:image;base64,@Convert.ToBase64String(Model[i].Pictures[0].ByteArray)" />
                 </div>
             </div>
 
