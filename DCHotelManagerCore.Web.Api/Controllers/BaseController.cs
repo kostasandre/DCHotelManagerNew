@@ -50,7 +50,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="entities"></param>
+        /// <param name="entities">
+        /// </param>
         /// <exception cref="NotImplementedException">
         /// </exception>
         [Route("delete")]
@@ -64,13 +65,13 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// The get all.
         /// </summary>
         /// <returns>
-        /// The <see cref="IEnumerable"/>.
+        /// The <see cref="IEnumerable{T}"/>.
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
         [HttpGet]
         [Route("getall")]
-        public virtual IEnumerable<T> GetAll()
+        public virtual JsonResult GetAll()
         {
             throw new NotImplementedException();
         }
@@ -79,7 +80,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// The get entity.
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <returns>
         /// The <see cref="T"/>.
@@ -87,8 +88,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <exception cref="NotImplementedException">
         /// </exception>
         [HttpGet]
-        [Route("getone/{id}")]
-        public virtual T GetEntity(int id)
+        [Route("getentity/{id}")]
+        public virtual JsonResult GetEntity(int id)
         {
             throw new NotImplementedException();
         }

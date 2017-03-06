@@ -47,15 +47,15 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <summary>
         /// The create.
         /// </summary>
-        /// <param name="billing">
+        /// <param name="room">
         /// The billing.
         /// </param>
         /// <returns>
         /// The <see cref="Customer"/>.
         /// </returns>
-        public Customer Create(Customer billing)
+        public Customer Create(Customer room)
         {
-            this.dataBaseContext.Customers.Add(billing);
+            this.dataBaseContext.Customers.Add(room);
             try
             {
                 this.dataBaseContext.SaveChanges();
@@ -65,7 +65,7 @@ namespace DCHotelManagerCore.Lib.Repositories
                 throw exception;
             }
 
-            return billing;
+            return room;
         }
 
         /// <summary>
@@ -80,13 +80,13 @@ namespace DCHotelManagerCore.Lib.Repositories
         {
             foreach (var id in customersId)
             {
-                var localCustomer = this.dataBaseContext.Hotels.SingleOrDefault(x => x.Id == id);
+                var localCustomer = this.dataBaseContext.Customers.SingleOrDefault(x => x.Id == id);
                 if (localCustomer == null)
                 {
                     throw new ArgumentNullException();
                 }
 
-                this.dataBaseContext.Hotels.Remove(localCustomer);
+                this.dataBaseContext.Customers.Remove(localCustomer);
                 this.dataBaseContext.SaveChanges();
             }
         }
@@ -97,9 +97,9 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <returns>
         /// The <see cref="IList{Customer}"/>.
         /// </returns>
-        public IList<Customer> ReadAllList()
+        public IEnumerable<Customer> ReadAllList()
         {
-            return this.dataBaseContext.Customers.Include("Bookings").ToList();
+            return this.dataBaseContext.Customers.ToList();
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public IQueryable<Customer> ReadAllQuery(DataBaseContext context)
         {
-            return context.Customers.Include("Bookings");
+            return context.Customers;
         }
 
         /// <summary>

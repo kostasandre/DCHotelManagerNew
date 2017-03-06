@@ -3,7 +3,7 @@
 //   
 // </copyright>
 // <summary>
-//   The billing repository.
+//   The room repository.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -21,10 +21,12 @@ namespace DCHotelManagerCore.Lib.Repositories
 
     using Microsoft.EntityFrameworkCore;
 
+    using Newtonsoft.Json;
+
     #endregion
 
     /// <summary>
-    /// The billing repository.
+    /// The room repository.
     /// </summary>
     public class RoomRepository : IEntityRepository<Room>
     {
@@ -47,18 +49,18 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <summary>
         /// The create.
         /// </summary>
-        /// <param name="billing">
-        /// The billing.
+        /// <param name="room">
+        /// The room.
         /// </param>
         /// <returns>
         /// The <see cref="Room"/>.
         /// </returns>
-        public Room Create(Room billing)
+        public Room Create(Room room)
         {
-            this.dataBaseContext.Rooms.Add(billing);
+            this.dataBaseContext.Rooms.Add(room);
             this.dataBaseContext.SaveChanges();
 
-            return billing;
+            return room;
         }
 
         /// <summary>
@@ -73,13 +75,13 @@ namespace DCHotelManagerCore.Lib.Repositories
         {
             foreach (var id in roomId)
             {
-                var localRoom = this.dataBaseContext.Hotels.SingleOrDefault(x => x.Id == id);
+                var localRoom = this.dataBaseContext.Rooms.SingleOrDefault(x => x.Id == id);
                 if (localRoom == null)
                 {
                     throw new ArgumentNullException();
                 }
 
-                this.dataBaseContext.Hotels.Remove(localRoom);
+                this.dataBaseContext.Rooms.Remove(localRoom);
                 this.dataBaseContext.SaveChanges();
             }
         }
@@ -90,9 +92,10 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <returns>
         /// The <see cref="IList{Room}"/>.
         /// </returns>
-        public IList<Room> ReadAllList()
+        public IEnumerable<Room> ReadAllList()
         {
-            return this.dataBaseContext.Rooms.Include("Hotel").Include("RoomType").ToList();
+            return this.dataBaseContext.Rooms.ToList();
+            
         }
 
         /// <summary>
@@ -106,7 +109,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public IQueryable<Room> ReadAllQuery(DataBaseContext context)
         {
-            return context.Rooms.Include("Hotel").Include("RoomType");
+            return context.Rooms;
         }
 
         /// <summary>
@@ -120,7 +123,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public Room ReadOne(int id)
         {
-            var room = this.dataBaseContext.Rooms.Include("Hotel").Include("RoomType").SingleOrDefault(x => x.Id == id);
+            var room = this.dataBaseContext.Rooms.SingleOrDefault(x => x.Id == id);
             return room;
         }
 
@@ -128,22 +131,22 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// The update.
         /// </summary>
         /// <param name="room">
-        /// The billing.
+        /// The room.
         /// </param>
         public void Update(Room room)
         {
             var databaseRoom =
-                this.dataBaseContext.Rooms.Include("Hotel").Include("RoomType").SingleOrDefault(x => x.Id == room.Id);
+                this.dataBaseContext.Rooms.SingleOrDefault(x => x.Id == room.Id);
             if (databaseRoom == null)
             {
                 return;
             }
 
-            // var databaseHotel = dataBaseContext.Hotels.SingleOrDefault(x => x.Id == billing.HotelId);          //to evala se sxolio giati sto update den mporoume na allaksoume Hotel
-            // databaseRoom.HotelId = databaseHotel.Id;                                               //to evala se sxolio giati sto update den mporoume na allaksoume Hotel
+            // var databaseHotel = dataBaseContext.Hotels.SingleOrDefault(x => x.Id == room.HotelId);          
+            // databaseRoom.HotelId = databaseHotel.Id;                                               
             databaseRoom.Code = room.Code;
 
-            // databaseRoom.RoomTypeId = billing.RoomTypeId;                                            // to evala se sxolio giati sto update den mporoume na allaksoume billing Type
+            // databaseRoom.RoomTypeId = room.RoomTypeId;                                           
             databaseRoom.Updated = DateTime.Now;
             databaseRoom.UpdatedBy = Environment.MachineName;
 

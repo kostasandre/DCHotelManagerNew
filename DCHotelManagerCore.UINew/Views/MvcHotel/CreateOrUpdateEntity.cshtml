@@ -1,4 +1,7 @@
-﻿
+﻿@using System.IO
+@using DCHotelManagerCore.Lib.Models.Persistent
+@using Microsoft.AspNetCore.Mvc.Razor
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
 @model DCHotelManagerCore.Lib.Models.Persistent.Hotel
 
 @{
@@ -9,18 +12,49 @@
 <h2>title</h2>
 
 <form asp-controller="MvcHotel" asp-action="Create" method="post">
-    
+
+
     <label>Name</label>
     @Html.TextBoxFor(model => model.Name)
+    <label>Manager</label>
+    @Html.TextBoxFor(model => model.Manager)
     <label>Email</label>
     @Html.TextBoxFor(model => Model.Email)
     <label>Address</label>
-    @Html.TextBoxFor(model=>model.Address)
+    @Html.TextBoxFor(model => model.Address)
+    <label>Phone</label>
+    @Html.TextBoxFor(model => model.Phone)
+    <label>TaxId</label>
+    @Html.TextBoxFor(hotel => hotel.TaxId)
+
+    @*@Html.DropDownList("HotelRooms", Model.AllRooms.Where(room => room.HotelId == Model.Id).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())*@
+    @if (Model != null)
+    {
+        for (int i = 0; i < Model.AllRooms.Where(room => room.HotelId == Model.Id).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList().Count(); i++)
+        {
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <div class="thumbnail">
+                    @*<img src="@hotel.ImageThumbnailUrl" alt="" />*@
+
+                    <div class="caption">
+
+                        <h3 class="pull-right">@Model.AllRooms[i].Code</h3>
+
+                        <h3>
+                            <a>@Model.Name</a>
+                        </h3>
+                        <p>@Model.AllRooms[i].RoomTypeId</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
     @*<a asp-action="Create">Create New</a>*@
-    <input type="submit" value="Create"/>
+    <input type="submit" value="Create" />
     @*<button type="button" class="btn btn-default" asp-controller="MvcHotel" asp-action="Create" asp-route-id="@Model.Name"></button>*@
-    
+
     @*<a asp-controller="MvcHotel" asp-action="Create" asp-route-hotelName="10"> ProductName</a>*@
-   
-    
+    <input type="hidden" asp-for="Id" />
+
 </form>

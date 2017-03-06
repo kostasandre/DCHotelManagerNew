@@ -65,10 +65,10 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// The <see cref="IEnumerable"/>.
         /// </returns>
         [HttpGet]
-        public IEnumerable<Hotel> Get()
+        public string Get()
         {
-            return this.hotelRepository.ReadAllList().ToList();
-
+            var strin = "";
+            return strin;
             //return new string[] { "value1", "value2" };
         }
 

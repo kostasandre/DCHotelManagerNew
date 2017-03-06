@@ -1,37 +1,23 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RoomController.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   The room controller.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DCHotelManagerCore.Web.Api.Controllers
 {
-    #region
-
-    using System.Collections.Generic;
-
     using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Repositories.Interfaces;
 
     using Microsoft.AspNetCore.Mvc;
 
-    using Newtonsoft.Json;
 
-    #endregion
-
-    /// <summary>
-    /// The room controller.
-    /// </summary>
     [Route("api/[controller]")]
-    public class RoomController : BaseController<Room>
+    public class PictureController:BaseController<Picture>
     {
         /// <summary>
         /// The hotel repository.
         /// </summary>
-        private readonly IEntityRepository<Room> roomRepository;
+        private readonly IEntityRepository<Picture> pictureRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoomController"/> class.
@@ -39,9 +25,9 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <param name="roomRepository">
         /// The room Repository.
         /// </param>
-        public RoomController(IEntityRepository<Room> roomRepository)
+        public PictureController(IEntityRepository<Picture> pictureRepository)
         {
-            this.roomRepository = roomRepository;
+            this.pictureRepository = pictureRepository;
         }
 
         /// <summary>
@@ -53,15 +39,15 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <returns>
         /// The <see cref="Hotel"/>.
         /// </returns>
-        public override JsonResult CreateOrUpdateEntity([FromBody] Room entity)
+        public override JsonResult CreateOrUpdateEntity([FromBody] Picture entity)
         {
             if (entity.Id == 0)
             {
-                entity = this.roomRepository.Create(entity);
+                entity = this.pictureRepository.Create(entity);
             }
             else
             {
-                this.roomRepository.Update(entity);
+                this.pictureRepository.Update(entity);
             }
 
             return new JsonResult(entity);
@@ -73,9 +59,9 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <param name="roomsId">
         /// The rooms Id.
         /// </param>
-        public override void Delete([FromBody] int[] roomsId)
+        public override void Delete([FromBody] int[] picturesId)
         {
-            this.roomRepository.Delete(roomsId);
+            this.pictureRepository.Delete(picturesId);
         }
 
         /// <summary>
@@ -86,8 +72,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// </returns>
         public override JsonResult GetAll()
         {
-            var roomList = this.roomRepository.ReadAllList();
-            return new JsonResult(roomList);
+            var pictureList = this.pictureRepository.ReadAllList();
+            return new JsonResult(pictureList);
         }
 
         /// <summary>
@@ -102,8 +88,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         [Route("getentity/{id}")]
         public override JsonResult GetEntity(int id)
         {
-            var jsonRoom = this.roomRepository.ReadOne(id);
-            return new JsonResult(jsonRoom);
+            var jsonPicture = this.pictureRepository.ReadOne(id);
+            return new JsonResult(jsonPicture);
         }
     }
 }

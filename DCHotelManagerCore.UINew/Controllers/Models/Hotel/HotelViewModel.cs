@@ -15,6 +15,8 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
 
     using DCHotelManagerCore.Lib.Models.Persistent;
 
+    using Microsoft.AspNetCore.Mvc.Rendering;
+
     #endregion
 
     /// <summary>
@@ -31,5 +33,9 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// Gets or sets the entities.
         /// </summary>
         public List<Hotel> Entities { get; set; }
+
+        public SelectList RoomList { get; set; }
+
+        public Room SelectedRoom { get; set; }
     }
 }

@@ -31,6 +31,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         public RoomType()
         {
             this.Rooms = new List<Room>();
+            this.IsChecked = false;
             this.Created = DateTime.Now;
             this.CreatedBy = Environment.MachineName;
         }
@@ -74,17 +75,8 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets a value indicating whether is checked.
         /// </summary>
         [NotMapped]
-        public bool IsChecked
-        {
-            get
-            {
-                return false;
-            }
+        public bool IsChecked { get; set; }
 
-            set
-            {
-            }
-        }
 
         /// <summary>
         /// Gets or sets the rooms.
@@ -120,5 +112,6 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets a value indicating whether wi fi.
         /// </summary>
         public bool WiFi { get; set; }
+      
     }
 }

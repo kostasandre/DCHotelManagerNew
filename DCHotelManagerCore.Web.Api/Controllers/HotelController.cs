@@ -18,6 +18,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers
 
     using Microsoft.AspNetCore.Mvc;
 
+    using Newtonsoft.Json;
+
     #endregion
 
     /// <summary>
@@ -82,25 +84,27 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         /// <returns>
         /// The <see cref="IEnumerable{T}"/>.
         /// </returns>
-        public override IEnumerable<Hotel> GetAll()
+        public override JsonResult GetAll()
         {
-            var list = this.hotelRepository.ReadAllList();
-            return list;
+          
+            var jsonHotelList = this.hotelRepository.ReadAllList();
+            return new JsonResult(jsonHotelList);
         }
 
         /// <summary>
         /// The get entity.
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <returns>
         /// The <see cref="Hotel"/>.
         /// </returns>
-        public override Hotel GetEntity(int id)
+        [Route("getentity/{id}")]
+        public override JsonResult GetEntity(int id)
         {
-            var hotel = this.hotelRepository.ReadOne(id);
-            return hotel;
+            var jsonHotel = this.hotelRepository.ReadOne(id);
+            return new JsonResult(jsonHotel);
         }
     }
 }

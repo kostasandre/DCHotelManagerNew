@@ -47,15 +47,15 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <summary>
         /// The create.
         /// </summary>
-        /// <param name="billing">
+        /// <param name="room">
         /// The billing type.
         /// </param>
         /// <returns>
         /// The <see cref="RoomType"/>.
         /// </returns>
-        public RoomType Create(RoomType billing)
+        public RoomType Create(RoomType room)
         {
-            this.dataBaseContext.RoomTypes.Add(billing);
+            this.dataBaseContext.RoomTypes.Add(room);
             try
             {
                 this.dataBaseContext.SaveChanges();
@@ -65,7 +65,7 @@ namespace DCHotelManagerCore.Lib.Repositories
                 throw exception;
             }
 
-            return billing;
+            return room;
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <returns>
         /// The <see cref="IList{billing}"/>.
         /// </returns>
-        public IList<RoomType> ReadAllList()
+        public IEnumerable<RoomType> ReadAllList()
         {
-            return this.dataBaseContext.RoomTypes.Include("Rooms").ToList();
+            return this.dataBaseContext.RoomTypes;
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public IQueryable<RoomType> ReadAllQuery(DataBaseContext context)
         {
-            return context.RoomTypes.Include("Rooms");
+            return context.RoomTypes;
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// </returns>
         public RoomType ReadOne(int id)
         {
-            var roomType = this.dataBaseContext.RoomTypes.Include("Rooms").SingleOrDefault(x => x.Id == id);
+            var roomType = this.dataBaseContext.RoomTypes.SingleOrDefault(x => x.Id == id);
             return roomType;
         }
 

@@ -1,0 +1,32 @@
+﻿@using System.IO
+@using DCHotelManagerCore.Lib.Models.Persistent
+@using Microsoft.AspNetCore.Mvc.Razor
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@model DCHotelManagerCore.Lib.Models.Persistent.Customer
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+
+<form asp-controller="MvcCustomer" asp-action="Create" method="post">
+
+    <label>Name</label>
+    @Html.TextBoxFor(model => model.Name)
+    <label>Surname</label>
+    @Html.TextBoxFor(model => model.Surname)
+    <label>Email</label>
+    @Html.TextBoxFor(model => Model.Email)
+    <label>Address</label>
+    @Html.TextBoxFor(model => model.Address)
+
+    @*<a asp-action="Create">Create New</a>*@
+    <input type="submit" value="Create" />
+    @*<button type="button" class="btn btn-default" asp-controller="MvcHotel" asp-action="Create" asp-route-id="@Model.Name"></button>*@
+
+    @*<a asp-controller="MvcHotel" asp-action="Create" asp-route-hotelName="10"> ProductName</a>*@
+    <input type="hidden" asp-for="Id" />
+
+</form>

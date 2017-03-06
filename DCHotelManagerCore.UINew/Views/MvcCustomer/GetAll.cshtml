@@ -1,15 +1,15 @@
 ﻿@using DCHotelManagerCore.Lib.Models.Persistent
-@model IList<DCHotelManagerCore.Lib.Models.Persistent.Hotel>
+@model IList<DCHotelManagerCore.Lib.Models.Persistent.Customer>
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>Hotels</h2>
-<form asp-controller="MvcHotel" asp-action="Delete" aspmethod="post">
-    
-   
-    
+<h2>Customers</h2>
+<form asp-controller="MvcCustomer" asp-action="Delete" aspmethod="post">
+
+
+
     @for (int i = 0; i < Model.Count(); i++)
     {
         <div class="col-sm-4 col-md-4 col-lg-4">
@@ -20,16 +20,17 @@
 
                     <h3 class="pull-right">@Model[i].Email</h3>
                     @Html.CheckBoxFor(m => Model[i].IsChecked)
-                    <a asp-action="CreateOrUpdateEntity" asp-route-id="@Model[i].Id">Edit</a>
-                   
+                    <a asp-action="CreateOrUpdateCustomer" asp-route-name="@Model[i].Name" asp-route-surname="@Model[i].Surname" asp-route-email="@Model[i].Email" asp-route-address="@Model[i].Address" asp-route-id="@Model[i].Id">Edit</a>
                     <h3>
                         <a>@Model[i].Name</a>
                     </h3>
+                    <h3>
+                        <a>@Model[i].Surname</a>
+                    </h3>
                     <p>@Model[i].Address</p>
-                    <p>@Model[i].Pictures[i].ByteArray</p>
                 </div>
             </div>
-      
+
             @Html.HiddenFor(m => Model[i].Id)
             @Html.HiddenFor(m => Model[i].Address)
             @Html.HiddenFor(m => Model[i].Created)
@@ -37,16 +38,18 @@
             @Html.HiddenFor(m => Model[i].Deleted)
             @Html.HiddenFor(m => Model[i].DeletedBy)
             @Html.HiddenFor(m => Model[i].Email)
-            @Html.HiddenFor(m => Model[i].Manager)
+            @Html.HiddenFor(m => Model[i].Surname)
             @Html.HiddenFor(m => Model[i].Name)
             @Html.HiddenFor(m => Model[i].Phone)
             @Html.HiddenFor(m => Model[i].TaxId)
             @Html.HiddenFor(m => Model[i].Updated)
             @Html.HiddenFor(m => Model[i].UpdatedBy)
-            @Html.HiddenFor(m => Model[i].Rooms)
+            @Html.HiddenFor(m => Model[i].Email)
+            @Html.HiddenFor(m => Model[i].IsChecked)
+            
         </div>
     }
-    
-   
+
+
     <input type="submit" value="Delete" />
 </form>
