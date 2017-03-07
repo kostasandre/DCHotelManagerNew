@@ -6,11 +6,11 @@
 }
 
 <h2>Rooms</h2>
-<form asp-controller="MvcRoom" asp-action="Delete" aspmethod="post">
+<form id="deleteRoomForm" asp-controller="MvcRoom" asp-action="Delete" aspmethod="post">
 
 
 
-    @for (int i = 0; i < Model.Count(); i++)
+    @for (var i = 0; i < Model.Count(); i++)
     {
         <div class="col-sm-4 col-md-4 col-lg-4">
             <div class="thumbnail">
@@ -20,12 +20,15 @@
 
                     <h3 class="pull-right">@Model[i].Hotel?.Name</h3>
                     @Html.CheckBoxFor(m => Model[i].IsChecked)
-                    <a asp-action="CreateOrUpdateRoom" asp-route-id="@Model[i].Id" >Edit</a>
+                    <a asp-action="CreateOrUpdateRoom" asp-route-id="@Model[i].Id">Edit</a>
                     <h3>
                         <a>@Model[i].Hotel?.Name</a>
                     </h3>
                     <p>@Model[i].Code</p>
-                    <img class="img-thumbnail img-rounded" src="data:image;base64,@Convert.ToBase64String(Model[i].Pictures[0].ByteArray)" />
+                    @if (Model[i].Pictures.Count != 0)
+                    {
+                        <img class="img-thumbnail img-rounded" src="data:image;base64,@Convert.ToBase64String(Model[i].Pictures[0].ByteArray)" alt="No image to display" />
+                    }
                 </div>
             </div>
 
@@ -47,5 +50,9 @@
     }
 
 
-    <input type="submit" value="Delete" />
+    <input id="deleteRoom" type="submit" value="Delete" onclick="return requiredFields();"/>
+    
+    <div id="divProcessing">
+        <p>Processing, please wait . . . <img src="/images/25.gif" alt="" /></p>
+    </div>
 </form>

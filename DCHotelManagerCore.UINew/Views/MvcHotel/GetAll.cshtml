@@ -7,7 +7,7 @@
 }
 
 <h2>Hotels</h2>
-<form asp-controller="MvcHotel" asp-action="Delete" aspmethod="post">
+<form id="deleteHotelForm" asp-controller="MvcHotel" asp-action="Delete" aspmethod="post">
     
    
     
@@ -29,7 +29,7 @@
                     <p>@Model[i].Address</p>
                     @if (Model[i].Pictures.Count != 0)
                     {
-                        <img class="img-thumbnail img-rounded" src="data:image;base64,@Convert.ToBase64String(Model[i].Pictures[0].ByteArray)" />
+                        <img class="img-thumbnail img-rounded" src="data:image;base64,@Convert.ToBase64String(Model[i].Pictures[0].ByteArray)" alt="No image to display"/>
                     }
                     
                 </div>
@@ -53,7 +53,10 @@
     }
     
     <div align="right">
-        <input type="submit" value="Delete" />   
+        <input id="deleteHotel" type="submit" value="Delete" onclick="return requiredFields();" />   
     </div>
  
+    <div id="divProcessing">
+        <p>Processing, please wait . . . <img src="/images/25.gif" alt="" /></p>
+    </div>
 </form>

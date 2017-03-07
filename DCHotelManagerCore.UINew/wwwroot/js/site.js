@@ -23,12 +23,32 @@
 function requiredFields() {
 
     // Handle the form submit event, and make the Ajax request:
-    $("#myform").on("submit", function () {
+    $("#createOrUpdateHotelForm").on("submit", function () {
 
         // Show the "busy" Gif:
         $("#divProcessing").show();
         document.getElementById("createHotel").disabled = true;
     });
-    
+
+    $("#createOrUpdateRoomForm").on("submit", function () {
+
+        // Show the "busy" Gif:
+        $("#divProcessing").show();
+        document.getElementById("createRoom").disabled = true;
+    });
+
+    $("#deleteRoomForm").on("submit", function () {
+
+        // Show the "busy" Gif:
+        $("#divProcessing").show();
+        document.getElementById("deleteRoom").disabled = true;
+    });
+
+    $("#deleteHotelForm").on("submit", function () {
+
+        // Show the "busy" Gif:
+        $("#divProcessing").show();
+        document.getElementById("deleteHotel").disabled = true;
+    });
 }
 

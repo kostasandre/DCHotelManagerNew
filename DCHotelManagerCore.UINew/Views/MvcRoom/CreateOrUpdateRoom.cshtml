@@ -19,9 +19,12 @@
             </div>
             <div class="col-lg-6  col-md-4 col-sm-3 col-xs-2">
             </div>
-            <div class="col-lg-2 col-md-2  col-sm-2  col-xs-2">
-                <img class="img-rounded image-title" src="data:image;base64,@Convert.ToBase64String(Model.Pictures[0].ByteArray)" alt="No image to display"/>
-            </div>
+            @if (Model.Pictures.Count != 0)
+            {
+                <div class="col-lg-2 col-md-2  col-sm-2  col-xs-2">
+                    <img class="img-rounded image-title" src="data:image;base64,@Convert.ToBase64String(Model.Pictures[0].ByteArray)" alt="No image to display" />
+                </div>
+            }
         </div>
     </div>
 }
@@ -30,33 +33,36 @@ else
     <h2>Create Room</h2>
 }
 
-<form asp-controller="MvcRoom" asp-action="Create" method="post">
-   
-    <label>Code</label>
-    @Html.TextBoxFor(model => Model.Code)
-    
-   @if (Model.Id != 0)
-   {
-       <label>Hotels</label>
-       @Html.DropDownList("Hotels", Model.AllHotels.Where(hotel => hotel.Id == Model.HotelId).Select(m => new SelectListItem() { Text = m.Name, Value = m.CreatedBy.ToString() }).ToList())
-       <label>RoomType</label>
-       @Html.DropDownList("RoomType", Model.AllRoomTypes.Where(roomType => roomType.Id == Model.RoomTypeId).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())
+<form id="createOrUpdateRoomForm" asp-controller="MvcRoom" asp-action="Create" method="post">
 
-   }
-   else
-   {
-    <label>Hotels</label>
-    @Html.DropDownListFor(m => m.HotelId, Model.AllHotels.Select(m => new SelectListItem() { Text = m.Name, Value = m.Id.ToString() }).ToList())
-    <label>RoomType</label>
-    @Html.DropDownListFor(m => m.RoomTypeId, Model.AllRoomTypes.Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())
-    
-   }
+    <label>Code</label>
+    @Html.TextBoxFor(model => Model.Code, new { @oninput = "setCustomValidity('')", @oninvalid = "this.setCustomValidity('Code field is required')", @required = "required" })
+
+    @if (Model.Id != 0)
+    {
+        <label>Hotels</label>
+        @Html.DropDownList("Hotels", Model.AllHotels.Where(hotel => hotel.Id == Model.HotelId).Select(m => new SelectListItem() { Text = m.Name, Value = m.CreatedBy.ToString() }).ToList())
+        <label>RoomType</label>
+        @Html.DropDownList("RoomType", Model.AllRoomTypes.Where(roomType => roomType.Id == Model.RoomTypeId).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())
+
+    }
+    else
+    {
+        <label>Hotels</label>
+        @Html.DropDownListFor(m => m.HotelId, Model.AllHotels.Select(m => new SelectListItem() { Text = m.Name, Value = m.Id.ToString() }).ToList())
+        <label>RoomType</label>
+        @Html.DropDownListFor(m => m.RoomTypeId, Model.AllRoomTypes.Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())
+
+    }
 
     @*<a asp-action="Create">Create New</a>*@
-    <input type="submit" value="Create" />
+    <input id="createRoom" type="submit" value="Create" onclick="return requiredFields();" />
     @*<button type="button" class="btn btn-default" asp-controller="MvcHotel" asp-action="Create" asp-route-id="@Model.Name"></button>*@
 
     @*<a asp-controller="MvcHotel" asp-action="Create" asp-route-hotelName="10"> ProductName</a>*@
     <input type="hidden" asp-for="Id" />
 
+    <div id="divProcessing">
+        <p>Processing, please wait . . . <img src="/images/25.gif" alt="" /></p>
+    </div>
 </form>
