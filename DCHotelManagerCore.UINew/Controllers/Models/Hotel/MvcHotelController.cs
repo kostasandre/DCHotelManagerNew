@@ -19,6 +19,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     using System.Linq;
     using System.Net.Http;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using DCHotelManagerCore.Lib.Models.Persistent;
@@ -52,14 +53,14 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         [HttpPost]
         public async Task<IActionResult> Create(Hotel hotel)
         {
-            var jsonHotel = JsonConvert.SerializeObject(hotel);
+                var jsonHotel = JsonConvert.SerializeObject(hotel);
 
-            var httpClient = new HttpClient();
+                var httpClient = new HttpClient();
 
-            var response = await httpClient.PostAsync(
-                               "http://localhost:5010/api/Hotel/createOrUpdate",
-                               new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
-            var newHotel = response.Content.ReadAsStringAsync().Result;
+                var response = await httpClient.PostAsync(
+                                   "http://localhost:5010/api/Hotel/createOrUpdate",
+                                   new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
+                var newHotel = response.Content.ReadAsStringAsync().Result;
             return this.RedirectToAction("GetAll");
         }
 

@@ -9,7 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\images\25.gif" />
     <Content Include="wwwroot\images\panoramaHotel.jpg" />
+    <Content Include="wwwroot\js\Validation.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
