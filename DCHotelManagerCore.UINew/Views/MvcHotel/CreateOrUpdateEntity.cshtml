@@ -35,7 +35,7 @@ else
 }
 
 
-<form  id="createOrUpdateHotelForm" asp-controller="MvcHotel" asp-action="Create" method="post">
+<form  id="createOrUpdateHotelForm" asp-controller="MvcHotel" asp-action="Create" method="post" enctype="multipart/form-data">
     <div style="display: inline-block">
         <label>Name</label>
         @Html.TextBoxFor(model => Model.Name, new { @oninput = "setCustomValidity('')", @oninvalid = "this.setCustomValidity('Name field is required')", @required = "required"})
@@ -49,6 +49,8 @@ else
         @Html.TextBoxFor(model => Model.Phone)
         <label>TaxId</label>
         @Html.TextBoxFor(hotel => Model.TaxId)
+        <label>Upload Picture</label>
+        <input name="picture" type="file"/>
 
 
         @if (Model != null)

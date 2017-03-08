@@ -90,6 +90,9 @@ namespace DCHotelManagerCore.Lib.Repositories
                     throw new ArgumentNullException();
                 }
 
+                var picture = this.dataBaseContext.Pictures.SingleOrDefault(pic => pic.HotelId == id);
+                picture.HotelId = null;
+                this.dataBaseContext.Update(picture);
                 this.dataBaseContext.Hotels.Remove(localHotel);
                 this.dataBaseContext.SaveChanges();
             }
