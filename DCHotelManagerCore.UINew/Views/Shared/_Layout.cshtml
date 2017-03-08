@@ -66,7 +66,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown">Customer <span class="caret"></span></a>
                             <ul class="dropdown-menu background-color">
                                 <li><a  asp-area="" asp-controller="MvcCustomer" asp-action="GetAll">Customers</a></li>
-                                <li><a  asp-area="" asp-controller="MvcRoomType" asp-action="CreateOrUpdateRoomType">Create</a></li>
+                                <li><a  asp-area="" asp-controller="MvcCustomer" asp-action="CreateOrUpdateCustomer">Create</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -90,7 +90,6 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
-        <script src="~/js/Validation.js" asp-append-version="true"></script>
         
     </environment>
     <environment names="Staging,Production">

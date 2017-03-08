@@ -13,10 +13,11 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
 
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
+
+    using Microsoft.AspNetCore.Http;
 
     #endregion
 
@@ -46,6 +47,12 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets the address.
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets the all rooms.
+        /// </summary>
+        [NotMapped]
+        public List<Room> AllRooms { get; set; }
 
         /// <summary>
         /// Gets or sets the created.
@@ -109,6 +116,12 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         public virtual List<Room> Rooms { get; set; }
 
         /// <summary>
+        /// Gets or sets the selected rooms.
+        /// </summary>
+        [NotMapped]
+        public List<Room> SelectedRooms { get; set; }
+
+        /// <summary>
         /// Gets or sets the tax id.
         /// </summary>
         public string TaxId { get; set; }
@@ -122,21 +135,5 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// Gets or sets the updated by.
         /// </summary>
         public string UpdatedBy { get; set; }
-
-        #region Non Persistent Properties
-
-        /// <summary>
-        /// Gets or sets the selected rooms.
-        /// </summary>
-        [NotMapped]
-        public List<Room> SelectedRooms { get; set; }
-
-        /// <summary>
-        /// Gets or sets the all rooms.
-        /// </summary>
-        [NotMapped]
-        public List<Room> AllRooms { get; set; }
-
-        #endregion 
     }
 }

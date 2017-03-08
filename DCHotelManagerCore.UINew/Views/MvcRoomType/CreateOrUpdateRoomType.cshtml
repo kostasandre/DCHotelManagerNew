@@ -12,7 +12,7 @@
 
 <h2>Rooms</h2>
 
-<form asp-controller="MvcRoomType" asp-action="Create" method="post">
+<form id="createOrUpdateRoomTypeForm" asp-controller="MvcRoomType" asp-action="Create" method="post">
 
     @if (Model != null)
     {
@@ -40,10 +40,14 @@
     @Html.CheckBoxFor(model => model.WiFi)
 
     @*<a asp-action="Create">Create New</a>*@
-    <input type="submit" value="Create" />
+    <input id="createRoomType" type="submit" value="Create" onclick="return requiredFields();"/>
     @*<button type="button" class="btn btn-default" asp-controller="MvcHotel" asp-action="Create" asp-route-id="@Model.Name"></button>*@
 
     @*<a asp-controller="MvcHotel" asp-action="Create" asp-route-hotelName="10"> ProductName</a>*@
     <input type="hidden" asp-for="Id" />
+    
+    <div id="divProcessing">
+        <p>Processing, please wait . . . <img src="/images/25.gif" alt="" /></p>
+    </div>
 
 </form>

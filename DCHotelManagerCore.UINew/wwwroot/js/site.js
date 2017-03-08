@@ -37,6 +37,20 @@ function requiredFields() {
         document.getElementById("createRoom").disabled = true;
     });
 
+    $("#createOrUpdateRoomTypeForm").on("submit", function () {
+
+        // Show the "busy" Gif:
+        $("#divProcessing").show();
+        document.getElementById("createRoomType").disabled = true;
+    });
+
+    $("#createOrUpdateCustomerForm").on("submit", function () {
+
+        // Show the "busy" Gif:
+        $("#divProcessing").show();
+        document.getElementById("createCustomer").disabled = true;
+    });
+
     $("#deleteRoomForm").on("submit", function () {
 
         // Show the "busy" Gif:
@@ -49,6 +63,20 @@ function requiredFields() {
         // Show the "busy" Gif:
         $("#divProcessing").show();
         document.getElementById("deleteHotel").disabled = true;
+    });
+
+    $("#deleteRoomTypeForm").on("submit", function () {
+
+        // Show the "busy" Gif:
+        $("#divProcessing").show();
+        document.getElementById("deleteRoomType").disabled = true;
+    });
+
+    $("#deleteCustomerForm").on("submit", function () {
+
+        // Show the "busy" Gif:
+        $("#divProcessing").show();
+        document.getElementById("deleteCustomer").disabled = true;
     });
 }
 

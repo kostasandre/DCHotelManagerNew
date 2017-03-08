@@ -21,6 +21,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Web;
 
     using DCHotelManagerCore.Lib.Models.Persistent;
 
@@ -36,7 +37,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
     /// The mvc hotel controller.
     /// </summary>
     [Route("client/[controller]")]
-    public class MvcHotelController : BaseMvcController<Hotel>
+    public class MvcHotelController: BaseMvcController<Hotel>
     {
         // IEntityUiController<Hotel>
 
@@ -51,16 +52,31 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         /// </returns>
         [Route("Create")]
         [HttpPost]
-        public async Task<IActionResult> Create(Hotel hotel)
+        public async Task<IActionResult> Create(Hotel hotel, IFormFile picture)
         {
-                var jsonHotel = JsonConvert.SerializeObject(hotel);
+            var jsonHotel = JsonConvert.SerializeObject(hotel);
+            
+            var httpClient = new HttpClient();
 
-                var httpClient = new HttpClient();
+            var response = await httpClient.PostAsync(
+                                "http://localhost:5010/api/Hotel/createOrUpdate",
+                                new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
+            var newHotel = response.Content.ReadAsStringAsync().Result;
 
-                var response = await httpClient.PostAsync(
-                                   "http://localhost:5010/api/Hotel/createOrUpdate",
-                                   new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
-                var newHotel = response.Content.ReadAsStringAsync().Result;
+            if (picture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    var localHotel = JsonConvert.DeserializeObject<Hotel>(newHotel);
+                    var pictureToUpload = new Picture { HotelId = localHotel.Id };
+                    await picture.CopyToAsync(stream);
+                    pictureToUpload.ByteArray = stream.ToArray();
+                    var jsonPictureToUpload = JsonConvert.SerializeObject(pictureToUpload);
+                    response = await httpClient.PostAsync(
+                                "http://localhost:5010/api/Picture/createOrUpdate",
+                                new StringContent(jsonPictureToUpload, Encoding.UTF8, "application/json"));
+                }
+            }
             return this.RedirectToAction("GetAll");
         }
 

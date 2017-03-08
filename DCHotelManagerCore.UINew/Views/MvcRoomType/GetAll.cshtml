@@ -6,7 +6,7 @@
 }
 
 <h2>Rooms</h2>
-<form asp-controller="MvcRoomType" asp-action="Delete" aspmethod="post">
+<form id="deleteRoomTypeForm" asp-controller="MvcRoomType" asp-action="Delete" aspmethod="post">
 
 
 
@@ -47,5 +47,9 @@
     }
 
 
-    <input type="submit" value="Delete" />
+    <input id="deleteRoomType" type="submit" value="Delete" onclick="return requiredFields();" />
+
+    <div id="divProcessing">
+        <p>Processing, please wait . . . <img src="/images/25.gif" alt="" /></p>
+    </div>
 </form>

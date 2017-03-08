@@ -76,17 +76,17 @@ namespace DCHotelManagerCore.Lib.Repositories
         /// <exception cref="ArgumentNullException">
         /// The billing type is null
         /// </exception>
-        public void Delete(int[] customersId)
+        public void Delete(int[] roomTypesId)
         {
-            foreach (var id in customersId)
+            foreach (var id in roomTypesId)
             {
-                var localRoomType = this.dataBaseContext.Hotels.SingleOrDefault(x => x.Id == id);
+                var localRoomType = this.dataBaseContext.RoomTypes.SingleOrDefault(x => x.Id == id);
                 if (localRoomType == null)
                 {
                     throw new ArgumentNullException();
                 }
 
-                this.dataBaseContext.Hotels.Remove(localRoomType);
+                this.dataBaseContext.RoomTypes.Remove(localRoomType);
                 this.dataBaseContext.SaveChanges();
             }
         }
