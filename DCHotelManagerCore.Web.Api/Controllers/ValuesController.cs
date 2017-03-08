@@ -45,6 +45,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         }
 
         // DELETE api/values/5
+
         /// <summary>
         /// The delete.
         /// </summary>
