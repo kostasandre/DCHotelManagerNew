@@ -2,6 +2,7 @@
 @using DCHotelManagerCore.Lib.Models.Persistent
 @using Microsoft.AspNetCore.Mvc.Razor
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @model DCHotelManagerCore.Lib.Models.Persistent.Hotel
 
 @{
@@ -9,52 +10,84 @@
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+@if (Model != null)
+{
+    <div class="container" style="width: 100%">
+        <div class="row">
+            <div class="col-lg-3  col-md-3 col-sm-3 col-xs-4">
+                <h2>Hotel @Model.Name</h2>
+            </div>
+            <div class="col-lg-7  col-md-6 col-sm-6 col-xs-4">
+            </div>
+            @if (Model.Pictures.Count != 0)
+            {
+                <div class="col-lg-2 col-md-2  col-sm-2  col-xs-4">
+                    <img class="img-rounded image-title" src="data:image;base64,@Convert.ToBase64String(Model.Pictures[0].ByteArray)" alt="No image to display" />
+                </div>
+            }
+            
+        </div>
+    </div>
+}
+else
+{
+    <h2>Create Hotel</h2>
+}
 
-<form asp-controller="MvcHotel" asp-action="Create" method="post">
+
+<form  id="createOrUpdateHotelForm" asp-controller="MvcHotel" asp-action="Create" method="post">
+    <div style="display: inline-block">
+        <label>Name</label>
+        @Html.TextBoxFor(model => Model.Name, new { @oninput = "setCustomValidity('')", @oninvalid = "this.setCustomValidity('Name field is required')", @required = "required"})
+        <label>Manager</label>
+        @Html.TextBoxFor(model => Model.Manager, new { @oninput = "setCustomValidity('')", @oninvalid = "this.setCustomValidity('Manager field is required')", @required = "required" })
+        <label>Email</label>
+        @Html.TextBoxFor(model => Model.Email, new{ @oninput = "setCustomValidity('')", @oninvalid = "this.setCustomValidity('Please enter valid email address')", @type = "email", @required = "required" })
+        <label>Address</label>
+        @Html.TextBoxFor(model => Model.Address)
+        <label>Phone</label>
+        @Html.TextBoxFor(model => Model.Phone)
+        <label>TaxId</label>
+        @Html.TextBoxFor(hotel => Model.TaxId)
 
 
-    <label>Name</label>
-    @Html.TextBoxFor(model => model.Name)
-    <label>Manager</label>
-    @Html.TextBoxFor(model => model.Manager)
-    <label>Email</label>
-    @Html.TextBoxFor(model => Model.Email)
-    <label>Address</label>
-    @Html.TextBoxFor(model => model.Address)
-    <label>Phone</label>
-    @Html.TextBoxFor(model => model.Phone)
-    <label>TaxId</label>
-    @Html.TextBoxFor(hotel => hotel.TaxId)
-
-    @*@Html.DropDownList("HotelRooms", Model.AllRooms.Where(room => room.HotelId == Model.Id).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())*@
-    @if (Model != null)
-    {
-        for (int i = 0; i < Model.AllRooms.Where(room => room.HotelId == Model.Id).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList().Count(); i++)
+        @if (Model != null)
         {
-            <div class="col-sm-4 col-md-4 col-lg-4">
-                <div class="thumbnail">
-                    @*<img src="@hotel.ImageThumbnailUrl" alt="" />*@
+            <input data-msg-required="The StringLengthAndRequiredDemo field is required." />
+            <label>Name</label>
+            for (int i = 0; i < Model.AllRooms.Where(room => room.HotelId == Model.Id).Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList().Count(); i++)
+            {
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="thumbnail">
+                        @*<img src="@hotel.ImageThumbnailUrl" alt="" />*@
 
-                    <div class="caption">
+                        <div class="caption">
 
-                        <h3 class="pull-right">@Model.AllRooms[i].Code</h3>
+                            <h3 class="pull-right">@Model.AllRooms[i].Code</h3>
 
-                        <h3>
-                            <a>@Model.Name</a>
-                        </h3>
-                        <p>@Model.AllRooms[i].RoomTypeId</p>
+                            <h3>
+                                <a>@Model.Name</a>
+                            </h3>
+                            <p>@Model.AllRooms[i].RoomTypeId</p>
+
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
-    }
 
-    @*<a asp-action="Create">Create New</a>*@
-    <input type="submit" value="Create" />
-    @*<button type="button" class="btn btn-default" asp-controller="MvcHotel" asp-action="Create" asp-route-id="@Model.Name"></button>*@
 
-    @*<a asp-controller="MvcHotel" asp-action="Create" asp-route-hotelName="10"> ProductName</a>*@
-    <input type="hidden" asp-for="Id" />
+        <input id="createHotel" type="submit" value="Create" onclick="return requiredFields();" />
 
+        <input type="hidden" asp-for="Id" />
+
+        
+        <div id="divProcessing">
+            <p>Processing, please wait . . . <img src="/images/25.gif" alt="" /></p>
+        </div>
+
+       
+        <div id="divResult">
+        </div>
+    </div>
 </form>

@@ -95,6 +95,18 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Room
             {
                 var stateInfo = response.Content.ReadAsStringAsync().Result;
                 localRoom.AllRoomTypes = JsonConvert.DeserializeObject<List<RoomType>>(stateInfo);
+            }
+
+            response = httpClient.GetAsync($"http://localhost:5010/api/Picture/getall").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var stateInfo = response.Content.ReadAsStringAsync().Result;
+                var pictures = JsonConvert.DeserializeObject<List<Picture>>(stateInfo);
+
+                foreach (var picture in pictures.Where(x => x.RoomId == localRoom.Id))
+                {
+                    localRoom.Pictures.Add(picture);
+                }
                 return this.View(localRoom);
             }
 
@@ -148,6 +160,21 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Room
             {
                 var stateInfo = response.Content.ReadAsStringAsync().Result;
                 rooms = JsonConvert.DeserializeObject<List<Room>>(stateInfo);
+            }
+
+            response = httpClient.GetAsync($"http://localhost:5010/api/Picture/getall").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var stateInfo = response.Content.ReadAsStringAsync().Result;
+                var pictures = JsonConvert.DeserializeObject<List<Picture>>(stateInfo);
+
+                foreach (var room in rooms)
+                {
+                    foreach (var picture in pictures.Where(x => x.RoomId == room.Id))
+                    {
+                        room.Pictures.Add(picture);
+                    }
+                }
             }
 
             return this.View(rooms);

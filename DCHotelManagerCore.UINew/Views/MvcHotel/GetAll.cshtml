@@ -1,4 +1,5 @@
-﻿@using DCHotelManagerCore.Lib.Models.Persistent
+﻿
+@using DCHotelManagerCore.Lib.Models.Persistent
 @model IList<DCHotelManagerCore.Lib.Models.Persistent.Hotel>
 @{
     ViewBag.Title = "title";
@@ -6,7 +7,7 @@
 }
 
 <h2>Hotels</h2>
-<form asp-controller="MvcHotel" asp-action="Delete" aspmethod="post">
+<form id="deleteHotelForm" asp-controller="MvcHotel" asp-action="Delete" aspmethod="post">
     
    
     
@@ -26,7 +27,11 @@
                         <a>@Model[i].Name</a>
                     </h3>
                     <p>@Model[i].Address</p>
-                    <p>@Model[i].Pictures[i].ByteArray</p>
+                    @if (Model[i].Pictures.Count != 0)
+                    {
+                        <img class="img-thumbnail img-rounded" src="data:image;base64,@Convert.ToBase64String(Model[i].Pictures[0].ByteArray)" alt="No image to display"/>
+                    }
+                    
                 </div>
             </div>
       
@@ -47,6 +52,11 @@
         </div>
     }
     
-   
-    <input type="submit" value="Delete" />
+    <div align="right">
+        <input id="deleteHotel" type="submit" value="Delete" onclick="return requiredFields();" />   
+    </div>
+ 
+    <div id="divProcessing">
+        <p>Processing, please wait . . . <img src="/images/25.gif" alt="" /></p>
+    </div>
 </form>

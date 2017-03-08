@@ -1,4 +1,8 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+﻿@using System.IO
+@using Microsoft.ApplicationInsights.AspNetCore
+@using Microsoft.AspNetCore.Mvc.Razor
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@inject JavaScriptSnippet JavaScriptSnippet
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +11,8 @@
     <title>@ViewData["Title"] - DCHotelManagerCore.UINew</title>
 
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
+        <link rel="stylesheet" href="~/css/site.css"/>
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -19,42 +23,64 @@
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body style="background-color: #cec4bd">
-<div>
-    <img class="image" src="~/images/panoramaHotel.jpg" alt="hotel"/>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="MvcHotel" asp-action="GetAll" class="navbar-brand">DCHotelManager</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="MvcHotel" asp-action="GetAll">Hotels</a></li>
-                    <li><a asp-area="" asp-controller="MvcHotel" asp-action="CreateOrUpdateEntity">Create</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="MvcRoom" asp-action="CreateOrUpdateRoom">Create Rooms</a></li>
-                    <li><a asp-area="" asp-controller="MvcRoom" asp-action="GetAll">Rooms</a></li>
-                    <li><a asp-area="" asp-controller="MvcCustomer" asp-action="GetAll">Customers</a></li>
-                    <li><a asp-area="" asp-controller="MvcCustomer" asp-action="CreateOrUpdateCustomer">Create Customer</a></li>
-                    <li><a asp-area="" asp-controller="MvcRoomType" asp-action="GetAll">RoomTypes</a></li>
-                    <li><a asp-area="" asp-controller="MvcRoomType" asp-action="CreateOrUpdateRoomType">Create RoomType</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div>
+        <img class="image" src="~/images/panoramaHotel.jpg" alt="hotel" />
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
 
 
-</div>
-<div class="container body-content" style="background-color: #9b9b9b">
-    @RenderBody()
-    <hr />
-       
-</div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a asp-area="" asp-controller="MvcHotel" asp-action="GetAll" class="navbar-brand">DCHotelManager</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Hotel <span class="caret"></span></a>
+                            <ul class="dropdown-menu background-color">
+                                <li><a asp-area="" asp-controller="MvcHotel" asp-action="GetAll">Hotels</a></li>
+                                <li><a asp-area="" asp-controller="MvcHotel" asp-action="CreateOrUpdateEntity">Create</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Room <span class="caret"></span></a>
+                            <ul class="dropdown-menu background-color">
+                                <li><a asp-area="" asp-controller="MvcRoom" asp-action="GetAll">Rooms</a></li>
+                                <li><a asp-area="" asp-controller="MvcRoom" asp-action="CreateOrUpdateRoom">Create</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Room Type <span class="caret"></span></a>
+                            <ul class="dropdown-menu background-color">
+                                <li><a  asp-area="" asp-controller="MvcRoomType" asp-action="GetAll">Room Types</a></li>
+                                <li><a  asp-area="" asp-controller="MvcRoomType" asp-action="CreateOrUpdateRoomType">Create</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Customer <span class="caret"></span></a>
+                            <ul class="dropdown-menu background-color">
+                                <li><a  asp-area="" asp-controller="MvcCustomer" asp-action="GetAll">Customers</a></li>
+                                <li><a  asp-area="" asp-controller="MvcRoomType" asp-action="CreateOrUpdateRoomType">Create</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+    </div>
+    <div class="container body-content" style="background-color: #9b9b9b">
+        @RenderBody()
+        <hr />
+
+    </div>
     <footer>
         <p>&copy; 2017 - DCHotelManagerCore.UINew</p>
     </footer>
@@ -63,6 +89,9 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/js/Validation.js" asp-append-version="true"></script>
+        
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -78,6 +107,7 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+     
     </environment>
 
     @RenderSection("Scripts", required: false)

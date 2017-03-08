@@ -13,13 +13,19 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
 
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
     using System.Linq;
     using System.Net.Http;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using DCHotelManagerCore.Lib.Models.Persistent;
 
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
 
     using Newtonsoft.Json;
@@ -47,14 +53,14 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
         [HttpPost]
         public async Task<IActionResult> Create(Hotel hotel)
         {
-            var jsonHotel = JsonConvert.SerializeObject(hotel);
+                var jsonHotel = JsonConvert.SerializeObject(hotel);
 
-            var httpClient = new HttpClient();
+                var httpClient = new HttpClient();
 
-            var response = await httpClient.PostAsync(
-                               "http://localhost:5010/api/Hotel/createOrUpdate",
-                               new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
-            var newHotel = response.Content.ReadAsStringAsync().Result;
+                var response = await httpClient.PostAsync(
+                                   "http://localhost:5010/api/Hotel/createOrUpdate",
+                                   new StringContent(jsonHotel, Encoding.UTF8, "application/json"));
+                var newHotel = response.Content.ReadAsStringAsync().Result;
             return this.RedirectToAction("GetAll");
         }
 
@@ -84,13 +90,19 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
                     localHotel.AllRooms = JsonConvert.DeserializeObject<List<Room>>(stateInfo);
                 }
 
-                //response = httpClient.GetAsync($"http://localhost:5010/api/Picture/getall").Result;
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    stateInfo = response.Content.ReadAsStringAsync().Result;
-                //    localHotel.Pictures = JsonConvert.DeserializeObject<List<Picture>>(stateInfo);
-                //    return this.View(localHotel);
-                //}
+                response = httpClient.GetAsync($"http://localhost:5010/api/Picture/getall").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    stateInfo = response.Content.ReadAsStringAsync().Result;
+                    var pictures = JsonConvert.DeserializeObject<List<Picture>>(stateInfo);
+
+
+                    foreach (var picture in pictures.Where(x => x.HotelId == hotel.Id))
+                    {
+                        localHotel.Pictures.Add(picture);
+                    }
+                    return this.View(localHotel);
+                }
             }
 
             return this.View();
@@ -168,9 +180,9 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Hotel
 
                     foreach (var hotel in hotels)
                     {
-                        foreach (var picture in pictures)
+                        foreach (var picture in pictures.Where(x=>x.HotelId == hotel.Id))
                         {
-                            //if(hotel.Id == picture.)
+                           hotel.Pictures.Add(picture);
                         }
                     }
                 }
