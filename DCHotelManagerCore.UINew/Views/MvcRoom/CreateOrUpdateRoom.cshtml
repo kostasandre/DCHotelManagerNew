@@ -33,7 +33,7 @@ else
     <h2>Create Room</h2>
 }
 
-<form id="createOrUpdateRoomForm" asp-controller="MvcRoom" asp-action="Create" method="post">
+<form id="createOrUpdateRoomForm" asp-controller="MvcRoom" asp-action="Create" method="post" enctype="multipart/form-data">
 
     <label>Code</label>
     @Html.TextBoxFor(model => Model.Code, new { @oninput = "setCustomValidity('')", @oninvalid = "this.setCustomValidity('Code field is required')", @required = "required" })
@@ -54,6 +54,9 @@ else
         @Html.DropDownListFor(m => m.RoomTypeId, Model.AllRoomTypes.Select(m => new SelectListItem() { Text = m.Code, Value = m.Id.ToString() }).ToList())
 
     }
+    
+    <label>Upload Picture</label>
+    <input name="picture" type="file" />
 
     @*<a asp-action="Create">Create New</a>*@
     <input id="createRoom" type="submit" value="Create" onclick="return requiredFields();" />

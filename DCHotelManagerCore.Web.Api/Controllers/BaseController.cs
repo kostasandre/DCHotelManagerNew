@@ -14,6 +14,7 @@ namespace DCHotelManagerCore.Web.Api.Controllers
     using System;
     using System.Collections.Generic;
 
+    using DCHotelManagerCore.Lib.DbContext;
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
     using DCHotelManagerCore.Web.Api.Controllers.Interfaces;
 
@@ -93,5 +94,16 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         {
             throw new NotImplementedException();
         }
+
+        #region Implementation of IEntityController<T>
+
+        [HttpGet]
+        [Route("readallquery/{id}")]
+        public virtual JsonResult ReadAllQuery(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

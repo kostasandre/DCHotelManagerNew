@@ -41,12 +41,6 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the image.
-        /// </summary>
-        [NotMapped]
-        public IFormFile Image { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether is checked.
         /// </summary>
         [NotMapped]

@@ -12,9 +12,8 @@ namespace DCHotelManagerCore.Web.Api.Controllers.Interfaces
     #region
 
     using System.Collections.Generic;
-    using System.Net.Http;
 
-    using DCHotelManagerCore.Lib.Models.Persistent;
+    using DCHotelManagerCore.Lib.DbContext;
     using DCHotelManagerCore.Lib.Models.Persistent.Interfaces;
 
     using Microsoft.AspNetCore.Mvc;
@@ -43,14 +42,15 @@ namespace DCHotelManagerCore.Web.Api.Controllers.Interfaces
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="entities"></param>
+        /// <param name="entities">
+        /// </param>
         void Delete(int[] entities);
 
         /// <summary>
         /// The get.
         /// </summary>
         /// <returns>
-        /// The <see cref="IEnumerable"/>.
+        /// The <see cref="IEnumerable{T}"/>.
         /// </returns>
         JsonResult GetAll();
 
@@ -58,11 +58,22 @@ namespace DCHotelManagerCore.Web.Api.Controllers.Interfaces
         /// The get.
         /// </summary>
         /// <param name="id">
-        ///     The id.
+        /// The id.
         /// </param>
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
         JsonResult GetEntity(int id);
+
+        /// <summary>
+        /// The read all query.
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        JsonResult ReadAllQuery(int id);
     }
 }

@@ -11,8 +11,11 @@ namespace DCHotelManagerCore.Web.Api.Controllers
 {
     #region
 
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
+    using DCHotelManagerCore.Lib.DbContext;
     using DCHotelManagerCore.Lib.Models.Persistent;
     using DCHotelManagerCore.Lib.Repositories.Interfaces;
 

@@ -12,8 +12,12 @@ namespace DCHotelManagerCore.Web.Api.Controllers
     #region
 
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
+    using DCHotelManagerCore.Lib.DbContext;
     using DCHotelManagerCore.Lib.Models.Persistent;
+    using DCHotelManagerCore.Lib.Repositories;
     using DCHotelManagerCore.Lib.Repositories.Interfaces;
 
     using Microsoft.AspNetCore.Mvc;
@@ -67,6 +71,23 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         }
 
         /// <summary>
+        /// The create picture.
+        /// </summary>
+        /// <param name="photo">
+        /// The photo.
+        /// </param>
+        /// <returns>
+        /// The <see cref="int"/>.
+        /// </returns>
+        [HttpPost]
+        [Route("create")]
+        public int CreatePicture([FromBody] Picture picture)
+        {
+            this.pictureRepository.Create(picture);
+            return picture.Id;
+        }
+
+        /// <summary>
         /// The delete.
         /// </summary>
         /// <param name="picturesId">
@@ -103,6 +124,102 @@ namespace DCHotelManagerCore.Web.Api.Controllers
         {
             var jsonPicture = this.pictureRepository.ReadOne(id);
             return new JsonResult(jsonPicture);
+        }
+
+        /// <summary>
+        /// The read all query.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="JsonResult"/>.
+        /// </returns>
+        public override JsonResult ReadAllQuery(int id)
+        {
+            var context = new DataBaseContext();
+            var jsonPicture = this.pictureRepository.ReadAllQuery(context).Where(x => x.RoomId == id).ToList();
+            return jsonPicture.Count != 0 ? new JsonResult(jsonPicture[0]) : new JsonResult(null);
+        }
+
+
+        [HttpGet]
+        [Route("readallqueryhotel/{id}")]
+        public JsonResult ReadAllQueryHotel(int id)
+        {
+            var context = new DataBaseContext();
+            var jsonPicture = this.pictureRepository.ReadAllQuery(context).Where(x => x.HotelId == id).ToList();
+            return jsonPicture.Count != 0 ? new JsonResult(jsonPicture[0]) : new JsonResult(null);
+        }
+
+        /// <summary>
+        /// The set picture.
+        /// </summary>
+        /// <param name="pid">
+        /// The pid.
+        /// </param>
+        /// <param name="type">
+        /// The type.
+        /// </param>
+        /// <param name="eid">
+        /// The eid.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        [HttpGet]
+        [Route("set/{pid}/{type}/{eid}")]
+        public ActionResult SetPicture(int pid, string type, int eid)
+        {
+            var repository = this.pictureRepository as PictureRepository;
+
+            if (repository == null)
+            {
+                return new BadRequestResult();
+            }
+
+            try
+            {
+                repository.SetPicture(pid, type, eid);
+
+                return new OkResult();
+            }
+            catch
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        /// <summary>
+        /// The unset picture.
+        /// </summary>
+        /// <param name="pid">
+        /// The pid.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        [HttpGet]
+        [Route("unset/{pid}")]
+        public ActionResult UnsetPicture(int pid)
+        {
+            var repository = this.pictureRepository as PictureRepository;
+
+            if (repository == null)
+            {
+                return new BadRequestResult();
+            }
+
+            try
+            {
+                repository.UnsetPicture(pid);
+
+                return new OkResult();
+            }
+            catch
+            {
+                return new BadRequestResult();
+            }
         }
     }
 }

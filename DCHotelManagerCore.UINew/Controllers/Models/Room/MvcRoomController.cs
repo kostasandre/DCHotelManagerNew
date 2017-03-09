@@ -12,6 +12,7 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Room
     #region
 
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Net.Http;
     using System.Text;
@@ -19,10 +20,11 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Room
 
     using DCHotelManagerCore.Lib.Models.Persistent;
 
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Net.Http.Headers;
 
     using Newtonsoft.Json;
-
     #endregion
 
     /// <summary>
@@ -39,24 +41,46 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Room
         /// <param name="room">
         /// The room.
         /// </param>
+        /// <param name="picture">
+        /// The picture.
+        /// </param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
         [Route("Create")]
         [HttpPost]
-        public async Task<IActionResult> Create(Room room)
+        public async Task<IActionResult> Create(Room room, IFormFile picture)
         {
-            room.Hotel = null;
-
-            var jsonRoom = JsonConvert.SerializeObject(room);
-
-            
+            var databasePicture = new Picture();
             var httpClient = new HttpClient();
-
             var response = await httpClient.PostAsync(
                                "http://localhost:5010/api/Room/createOrUpdate",
-                               new StringContent(jsonRoom, Encoding.UTF8, "application/json"));
-            var newHotel = response.Content.ReadAsStringAsync().Result;
+                               new StringContent(JsonConvert.SerializeObject(room), Encoding.UTF8, "application/json"));
+
+            var roomId = JsonConvert.DeserializeObject<Room>(response.Content.ReadAsStringAsync().Result).Id;
+            if (picture != null && roomId != 0)
+            {
+                response = await httpClient.GetAsync($"http://localhost:5010/api/Picture/readallquery/{roomId}");
+                var existingPicture = JsonConvert.DeserializeObject<Picture>(response.Content.ReadAsStringAsync().Result);
+
+                if (existingPicture != null)
+                {
+                    response = await httpClient.GetAsync($"http://localhost:5010/api/Picture/unset/{existingPicture.Id}");
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    databasePicture.RoomId = roomId;
+                    databasePicture.ByteArray = stream.ToArray();
+                    var jsonPictureToUpload = JsonConvert.SerializeObject(databasePicture);
+
+                    response = await httpClient.PostAsync(
+                                   "http://localhost:5010/api/Picture/create",
+                                   new StringContent(jsonPictureToUpload, Encoding.UTF8, "application/json"));
+                }
+            }
+
             return this.RedirectToAction("GetAll");
         }
 
@@ -73,14 +97,14 @@ namespace DCHotelManagerCore.UINew.Controllers.Models.Room
         public async Task<IActionResult> CreateOrUpdateRoom(Room room)
         {
             var localRoom = new Room();
-            
+
 
             var httpClient = new HttpClient();
             var response = httpClient.GetAsync($"http://localhost:5010/api/Room/getentity/{room.Id}").Result;
             if (response.IsSuccessStatusCode && room.Id != 0)
             {
                 var stateInfo = response.Content.ReadAsStringAsync().Result;
-                 localRoom = JsonConvert.DeserializeObject<Room>(stateInfo);
+                localRoom = JsonConvert.DeserializeObject<Room>(stateInfo);
             }
 
             response = httpClient.GetAsync($"http://localhost:5010/api/Hotel/getall").Result;
