@@ -32,7 +32,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         public Hotel()
         {
             this.Rooms = new List<Room>();
-            this.Pictures = new List<Picture>();
+            //this.Pictures = new List<Picture>();
             this.Created = DateTime.Now;
             this.CreatedBy = Environment.MachineName;
 
@@ -108,7 +108,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// <summary>
         /// Gets or sets the pictures.
         /// </summary>
-        public List<Picture> Pictures { get; set; }
+        public Picture Picture { get; set; }
 
         /// <summary>
         /// Gets or sets the rooms.

@@ -49,6 +49,21 @@ namespace DCHotelManagerCore.Lib.DbContext
         }
 
         /// <summary>
+        /// Gets or sets the billings.
+        /// </summary>
+        public DbSet<Billing> Billings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the billing services.
+        /// </summary>
+        public DbSet<BillingService> BillingServices { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bookings.
+        /// </summary>
+        public DbSet<Booking> Bookings { get; set; }
+
+        /// <summary>
         /// Gets or sets the customers.
         /// </summary>
         public DbSet<Customer> Customers { get; set; }
@@ -72,5 +87,10 @@ namespace DCHotelManagerCore.Lib.DbContext
         /// Gets or sets the room types.
         /// </summary>
         public DbSet<RoomType> RoomTypes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the services.
+        /// </summary>
+        public DbSet<Service> Services { get; set; }
     }
 }
