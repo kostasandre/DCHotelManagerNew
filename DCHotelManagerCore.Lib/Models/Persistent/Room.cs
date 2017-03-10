@@ -32,7 +32,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
             this.AllHotels = new List<Hotel>();
             this.AllRoomTypes = new List<RoomType>();
             this.IsChecked = false;
-            //this.Pictures = new List<Picture>();
+            this.Pictures = new List<Picture>();
             this.Created = DateTime.Now;
             this.CreatedBy = Environment.MachineName;
         }
@@ -88,7 +88,7 @@ namespace DCHotelManagerCore.Lib.Models.Persistent
         /// <summary>
         /// Gets or sets the pictures.
         /// </summary>
-        public Picture Picture { get; set; }
+        public List<Picture> Pictures { get; set; }
 
         /// <summary>
         /// Gets or sets the room type.
