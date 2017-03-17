@@ -97,7 +97,7 @@ namespace DCHotelManagerCore.Lib.Repositories
                     this.dataBaseContext.Update(picture);
                     this.dataBaseContext.Update(picture);
                 }
-
+              
                 this.dataBaseContext.Hotels.Remove(localHotel);
                 this.dataBaseContext.SaveChanges();
             }
